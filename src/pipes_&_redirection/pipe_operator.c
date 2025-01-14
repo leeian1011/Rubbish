@@ -6,13 +6,13 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:13:09 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/13 23:18:46 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/14 15:59:40 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/pipe_operator.h"
 
-int	call_process(int *input_fds, int *output_fds, char **cmd)
+static int	call_process(int *input_fds, int *output_fds, char **cmd)
 {
 	char	*mod_path;
 
