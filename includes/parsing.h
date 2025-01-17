@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 13:22:46 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/16 15:10:08 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/17 18:32:25 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PARSING_H
 
 # include "binary_tree.h"
+# include "pipe_operator.h"
 # include "../src/libft/libft.h"
 
 # define META BLANK PIPE OB CB OA CA
@@ -36,6 +37,8 @@
 # define DOA OA OA
 # define DCA CA CA
 
+# define LEFT 0
+# define RIGHT 1
 typedef enum b_token_type
 {
 	EXPRESSION,
@@ -49,12 +52,18 @@ typedef enum b_token_type
 	ARGUMENTS,
 	ARGUMENT,
 	REDIRECTIONS,
-	REDIRECTION
+	REDIRECTION,
+	REDIRECTION_OP,
+	WORD
 }	t_token_type;
 
 typedef struct b_tokens
 {
 	t_token_type	type;
+	char		*str;
+	char		*delimeter;
+	int			*inputfds;
+	int			*outputfds;
 }		t_tokens;
 
 #endif // !PARSING_H

@@ -42,8 +42,8 @@ static char	*get_stdin(char *keyword)
 /// undefine behaviour if both file and heredoc is entered
 int	input_redirection(int *input_pipe, void *file, void *heredoc)
 {
-	int	fd;
-	char *line;
+	int		fd;
+	char	*line;
 
 	fd = -1;
 	if (file)

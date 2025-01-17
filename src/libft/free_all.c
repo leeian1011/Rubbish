@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:52:30 by jianwong          #+#    #+#             */
-/*   Updated: 2024/12/27 17:39:17 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/17 16:19:00 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /// takes in a void pointer pointer that has a NULL terminated array of pointers
 /// and free them all
-void	free_all(void **vars)
+void	free_all(void **vars, size_t size)
 {
 	int		i;
 	char	**variable;
@@ -22,6 +22,9 @@ void	free_all(void **vars)
 	i = 0;
 	variable = (char **)vars;
 	while (variable[i])
-		free(variable[i++]);
+	{
+		free(variable[i]);
+		i += size;
+	}
 	free(variable);
 }
