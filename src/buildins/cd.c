@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buildins.h                                         :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/19 21:16:16 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/20 01:49:51 by jianwong         ###   ########.fr       */
+/*   Created: 2025/01/20 01:09:36 by jianwong          #+#    #+#             */
+/*   Updated: 2025/01/20 01:41:40 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILDINS_H
-# define BUILDINS_H
+#include "../../includes/buildins.h"
 
-# include "../src/libft/libft.h"
+// INCOMPLETE!!!! ENV NOT MADE YET SO NO $HOME
 
-int	echo(char *input);
-int	pwd(void);
+/// takes in path string and potentially env var to fill in empty with HOME
+int	cd(char *path)
+{
+	char	cwd[PATH_MAX];
 
-#endif
+	if (chdir(path) == -1)
+	{
+		perror("cd");
+		return (1);
+	}
+	return (0);
+}
+
+/*int	main(int argc, char **argv)*/
+/*{*/
+/*	cd(argv[1]);*/
+/*	return 0; */
+/*}*/

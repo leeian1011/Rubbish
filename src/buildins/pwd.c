@@ -1,21 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buildins.h                                         :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/19 21:16:16 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/20 01:49:51 by jianwong         ###   ########.fr       */
+/*   Created: 2025/01/20 01:42:05 by jianwong          #+#    #+#             */
+/*   Updated: 2025/01/20 01:47:15 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILDINS_H
-# define BUILDINS_H
+#include "../../includes/buildins.h"
 
-# include "../src/libft/libft.h"
+int	pwd(void)
+{
+	char	cwd[PATH_MAX];
 
-int	echo(char *input);
-int	pwd(void);
-
-#endif
+	if (!getcwd(cwd, PATH_MAX))
+	{
+		perror("pwd");
+		return (1);
+	}
+	printf("%s\n", cwd);
+	return (0);
+}
+/**/
+/*int	main(int argc, char **argv)*/
+/*{*/
+/*	pwd();*/
+/*}*/
