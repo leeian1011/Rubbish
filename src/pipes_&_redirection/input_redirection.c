@@ -18,9 +18,7 @@ static char	*get_stdin(char *keyword)
 	char	*temp;
 
 	buffer = ft_calloc(1, 1);
-	if (!buffer)
-		return (NULL);
-	ft_printf("heredoc> ");
+	if (!buffer) return (NULL); ft_printf("heredoc> ");
 	line = get_next_line(0);
 	while (line && (ft_strncmp(line, keyword, ft_strlen(keyword)) \
 		|| line[ft_strlen(keyword)] != '\n'))

@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 13:22:46 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/17 18:32:25 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/20 19:23:45 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 
 # define LEFT 0
 # define RIGHT 1
+
 typedef enum b_token_type
 {
 	EXPRESSION,
@@ -65,5 +66,7 @@ typedef struct b_tokens
 	int			*inputfds;
 	int			*outputfds;
 }		t_tokens;
+
+void	split_token(t_btree *node);
 
 #endif // !PARSING_H

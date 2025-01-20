@@ -6,81 +6,14 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 13:22:31 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/17 18:37:21 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/20 22:41:40 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/parsing.h"
-#include <fcntl.h>
+#include <cstdlib>
+#include <iterator>
 #include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-
-void	split_and_or(int i, char **list, char *expression)
-{
-	int		j;
-	int		size;
-	char	*str;
-
-	j = -1;
-	size = ft_strlen(expression);
-	str = calloc(i + 1, sizeof(char));
-	if (!str)
-		return ;
-	while (++j < i)
-		str[j] = expression[j];
-	list[0] = str;
-	str = calloc(size - (i + 2), sizeof(char));
-	if (!str)
-		return ;
-	j += 2;
-	i = 0;
-	while (j++ < size)
-		str[i++] = expression[j];
-	list[1] = str;
-}
-
-char	**ft_split_expression(char *expression)
-{
-	char	**list;
-	int		len;
-	int		i;
-
-	list = calloc(sizeof(char *), 3);
-	if (!list)
-		return (NULL);
-	len = ft_strlen(expression);
-	i = 0;
-	while (++i < len)
-	{
-		if ((expression[i - 1] == '&' && expression[i] == '&') || \
-			(expression[i - 1] == '|' && expression[i] == '|'))
-		{
-			split_and_or(i - 1, list, expression);
-			break ;
-		}
-	}
-	if (!*list)
-		list[0] = ft_strdup(expression);
-	return (list);
-}
-
-// anything below simple commands like redirection and words will manually do
-void	split_token(t_tokens *token, t_tokens **childs)
-{
-	if (token.type == LIST || token.type == LIST_TAIL)
-		childs = ft_split_list(token);
-	else if (token.type == PIPELINE || token.type == PIPELINE_TAIL)
-		childs = ft_split_pipeline(token);
-	else if (token.type == SIMPLE_COMMAND)
-		childs = ft_split_cmd(token);
-	else if (token.type == SIMPLE_COMMAND_TAIL)
-		childs = ft_split_cmd_tail(token);
-	else  if (token.type == REDIRECTION)
-		childs = ft_split_redirection(token);
-	else
-		ft_bzero(childs, sizeof(t_tokens *) * 2);
-}
 
 // add input output pipes to allow childs to talk to each other
 int	add_pipes(t_tokens *token, t_tokens **childs)
@@ -96,9 +29,10 @@ int	add_pipes(t_tokens *token, t_tokens **childs)
 	childs[LEFT]->outputfds = pipefd;
 	childs[RIGHT]->inputfds = pipefd;
 	childs[RIGHT]->outputfds = token->outputfds;
+	return (0);
 }
 
-int	setup_redirection(t_tokens token, t_tokens **child_tokens)
+int	setup_redirection(t_tokens *token, t_tokens **child_tokens)
 {
 	char	*line;
 	int		word_idx;
@@ -107,44 +41,57 @@ int	setup_redirection(t_tokens token, t_tokens **child_tokens)
 
 	if (!child_tokens[0] || !child_tokens[1])
 		return (1);
+	word_idx = 1;
+	op_idx = 0;
 	if (child_tokens[0]->type == WORD)
 	{
 		word_idx = 0;
 		op_idx = 1;
 	}
+	if (!ft_strncmp(child_tokens[op_idx]->str, OA, 3))
+		input_redirection(token->outputfds, child_tokens[word_idx]->str, NULL);
+	else if (!ft_strncmp(child_tokens[op_idx]->str, DOA, 5))
+		input_redirection(token->outputfds, NULL, child_tokens[word_idx]->str);
+	else if (!ft_strncmp(child_tokens[op_idx]->str, CA, 3))
+		output_redirection(token->inputfds, child_tokens[word_idx]->str, 0);
+	else if (!ft_strncmp(child_tokens[op_idx]->str, DCA, 5))
+		output_redirection(token->inputfds, child_tokens[word_idx]->str, 1);
 	else
-	{
-		word_idx = 1;
-		op_idx = 0;
-	}
-	if (!ft_strncmp(child_tokens[op_idx]->str, OA, 2))
-		input_redirection(token.outputfds, child_tokens[word_idx]->str, NULL);
-	else
-		input_redirection(token.outputfds, NULL, child_tokens[word_idx]->str);
+		return (2);
+	return (0);
 }
 
-void	execute_node(t_tokens *token)
+int	run_command(t_tokens *token, t_tokens **child_tokens)
+{
+	
+}
+
+void	execute_node(t_tokens *token, t_tokens **child_tokens)
 {
 	if (token->type == REDIRECTION)
-		setup_redirection(token);
+		setup_redirection(token, child_tokens);
+	else if (token->type == SIMPLE_COMMAND)
+		run_command(token, child_tokens);
 }
 
-void	abstract_syntax_tree(t_tokens *token)
+void	abstract_syntax_tree(t_btree *node)
 {
-	t_tokens	**child_tokens;
-
-	if (!token)
-		return ;
-	split_token(token, child_tokens);
-	add_pipes(token, child_tokens);
-	abstract_syntax_tree(child_tokens[0]);
-	abstract_syntax_tree(child_tokens[1]);
-	closefds(child_tokens);
-	free_all((void **)child_tokens, sizeof(t_tokens));
-	execute_node(token);
+	split_token(node);
+	abstract_syntax_tree(node->left);
+	abstract_syntax_tree(node->right);
 }
 
-// int main (void)
-// {
-// 	abstract_syntax_tree("hi");
-// }
+int main (int argc, char **argv)
+{
+	t_btree	*root;
+	t_tokens *metadata;
+
+	metadata = malloc(sizeof(t_tokens));
+	if (!metadata)
+		return (1);
+	metadata->type = EXPRESSION;
+	metadata->str = argv[1];
+	metadata->delimeter = NULL;
+	root = btree_create_node(metadata);
+	abstract_syntax_tree(root);
+}
