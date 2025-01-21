@@ -18,6 +18,9 @@ $(NAME): $(OBJ) $(LIBFT)
 $(LIBFT):
 	make -C $(DIR_LIBFT) bonus
 
+test_dll:
+	$(CC) $(FLAGS) src/containers/dll_test.c src/containers/dll.c src/containers/dll_node.c
+
 clean:
 	rm -f src/*.o
 	make -C $(DIR_LIBFT) clean
