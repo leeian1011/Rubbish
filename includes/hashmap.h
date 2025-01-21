@@ -1,36 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   hashmap.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/20 01:09:36 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/21 19:02:00 by jianwong         ###   ########.fr       */
+/*   Created: 2025/01/21 19:15:40 by jianwong          #+#    #+#             */
+/*   Updated: 2025/01/21 20:24:34 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/buildins.h"
+#ifndef HASHMAP_H
+# define HASHMAP_H
 
-// INCOMPLETE!!!! ENV NOT MADE YET SO NO $HOME
+# include "../src/libft/libft.h"
 
-/// takes in path string and potentially env var to fill in empty with HOME
-int	cd(char *path)
-{
-	char	cwd[PATH_MAX];
-
-	if (!path)
-		path = env.HOME;
-	if (chdir(path) == -1)
-	{
-		perror("cd");
-		return (1);
-	}
-	return (0);
-}
-
-/*int	main(int argc, char **argv)*/
-/*{*/
-/*	cd(argv[1]);*/
-/*	return 0; */
-/*}*/
+#endif

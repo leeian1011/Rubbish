@@ -14,7 +14,7 @@ t_dll *dll_init()
   return (dll);
 }
 
-void *dll_append(t_dll *dll, char *data)
+void *dll_append(t_dll *dll, void *data)
 {
   if (!dll->head || !dll->tail)
   {
@@ -36,7 +36,7 @@ void *dll_append(t_dll *dll, char *data)
   return (dll);
 }
 
-void *dll_prepend(t_dll *dll, char *data)
+void *dll_prepend(t_dll *dll, void *data)
 {
   t_dll_node *temp;
 
@@ -98,7 +98,7 @@ void print_dll(t_dll *dll)
   while (itr)
   {
     printf("current: %p\n", itr);
-    printf("data: %s\n", itr->data);
+    printf("data: %s\n", (char *)itr->data);
     printf("next: %p\n", itr->next);
     printf("prev: %p\n", itr->prev);
     itr = itr->next;
