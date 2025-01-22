@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 19:49:30 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/21 21:40:42 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:05:37 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,20 @@ void	insert(t_hashmap *hashmap, char *key, char *value)
 		return ;
 	content->key = key;
 	content->value = value;
+	
 	hashmap->arr[index] = dll_append(nodes, content);
+}
+
+void	delete(t_hashmap *hashmap, char *key)
+{
+	int	index;
+	t_dll	*nodes;
+	t_dll_node	*temp;
+
+	index = hashing(hashmap, key);
+	hashmap->arr[index] = nodes;
+	temp = nodes->head;
+	return ;
 }
 
 int	main(void)
