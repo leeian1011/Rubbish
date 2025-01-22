@@ -61,6 +61,31 @@ void *dll_prepend(t_dll *dll, char *data)
   return (dll);
 }
 
+void dll_remove(t_dll *dll, t_dll_node *node)
+{
+  t_dll_node *temp;
+
+  if (dll->head == node)
+  {
+    node->next->prev = NULL;
+    dll->head = node->next;
+    free(node);
+  }
+  else if (dll->tail == node)
+  {
+    node->prev->next = NULL;
+    dll->tail = node->prev;
+    free(node);
+  }
+  else
+  {
+    temp = node;
+    node->prev->next = node->next;
+    node->next->prev = node->prev;
+    free(temp);
+  }
+}
+
 void print_dll(t_dll *dll)
 {
   t_dll_node *itr;
