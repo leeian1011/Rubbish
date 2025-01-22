@@ -1,5 +1,4 @@
 #include "../../../includes/containers.h"
-#include <stdio.h>
 
 t_dll *dll_init()
 {
