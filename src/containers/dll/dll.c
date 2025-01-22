@@ -86,6 +86,22 @@ void dll_remove(t_dll *dll, t_dll_node *node)
   }
 }
 
+t_dll_node	*dll_find(t_dll *dll, void *target, int (*cmp)(void *, void *))
+{
+	t_dll_node	*temp;
+
+	if (!dll->head || !dll->tail)
+		return (NULL);
+	temp = dll->head;
+	while (temp)
+	{
+		if (cmp(temp->data, target))
+			return (temp);
+		temp = temp->next;
+	}
+	return (NULL);
+}
+
 void print_dll(t_dll *dll)
 {
   t_dll_node *itr;
