@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 19:49:30 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/22 17:10:47 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/22 23:59:43 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_hashmap(t_hashmap *hashmap)
 		hashmap->arr[i++] = dll_init();
 }
 
-void	insert(t_hashmap *hashmap, char *key, char *value)
+void	hash_insert(t_hashmap *hashmap, char *key, char *value)
 {
 	int	index;
 	t_dll	*nodes;
@@ -49,7 +49,7 @@ void	insert(t_hashmap *hashmap, char *key, char *value)
 		((t_hashcontent *)node->data)->value = value;
 }
 
-void	delete(t_hashmap *hashmap, char *key)
+void	hash_delete(t_hashmap *hashmap, char *key)
 {
 	int	index;
 	t_dll	*nodes;
@@ -58,11 +58,11 @@ void	delete(t_hashmap *hashmap, char *key)
 	index = hashing(hashmap, key);
 	nodes = hashmap->arr[index];
 	node = dll_find(nodes, key, cmp);
-	// if (node)
-	// 	dll_remove(nodes, node);
+	if (node)
+		dll_remove(nodes, node);
 }
 
-char	*search(t_hashmap *hashmap, char *key)
+char	*hash_search(t_hashmap *hashmap, char *key)
 {
 	int	index;
 	t_dll	*nodes;
@@ -81,15 +81,16 @@ char	*search(t_hashmap *hashmap, char *key)
 // 	t_hashmap hashmap;
 //
 // 	init_hashmap(&hashmap);
-// 	insert(&hashmap, "indian", "Joshua");
-// 	insert(&hashmap, "shoe", "Nike");
-// 	insert(&hashmap, "indain", "man");
-// 	insert(&hashmap, "nndaii", "man");
-// 	insert(&hashmap, "shoe", "Adidas");
-// 	insert(&hashmap, "Chinese", "Rights");
-// 	printf("%s\n", search(&hashmap, "indian"));
-// 	printf("%s\n", search(&hashmap, "shoe"));
-// 	printf("%s\n", search(&hashmap, "indain"));
-// 	printf("%s\n", search(&hashmap, "nndaii"));
-// 	printf("%s\n", search(&hashmap, "Chinese"));
+// 	hash_insert(&hashmap, "indian", "Joshua");
+// 	hash_insert(&hashmap, "shoe", "Nike");
+// 	hash_insert(&hashmap, "indain", "man");
+// 	hash_insert(&hashmap, "nndaii", "man");
+// 	hash_insert(&hashmap, "shoe", "Adidas");
+// 	hash_insert(&hashmap, "Chinese", "Rights");
+// 	hash_delete(&hashmap, "indian");
+// 	printf("%s\n", hash_search(&hashmap, "indian"));
+// 	printf("%s\n", hash_search(&hashmap, "shoe"));
+// 	printf("%s\n", hash_search(&hashmap, "indain"));
+// 	printf("%s\n", hash_search(&hashmap, "nndaii"));
+// 	printf("%s\n", hash_search(&hashmap, "Chinese"));
 // }
