@@ -24,5 +24,6 @@ void free_node(t_dll_node *node);
 t_dll *dll_init();
 void *dll_append(t_dll *dll, char *data);
 void *dll_prepend(t_dll *dll, char *data);
+void dll_remove(t_dll *dll, t_dll_node *node);
 
 #endif
