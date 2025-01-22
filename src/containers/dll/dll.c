@@ -1,5 +1,4 @@
 #include "../../../includes/containers.h"
-#include <stdio.h>
 
 t_dll *dll_init()
 {
@@ -14,7 +13,7 @@ t_dll *dll_init()
   return (dll);
 }
 
-void *dll_append(t_dll *dll, char *data)
+void *dll_append(t_dll *dll, void *data)
 {
   if (!dll->head || !dll->tail)
   {
@@ -36,7 +35,7 @@ void *dll_append(t_dll *dll, char *data)
   return (dll);
 }
 
-void *dll_prepend(t_dll *dll, char *data)
+void *dll_prepend(t_dll *dll, void *data)
 {
   t_dll_node *temp;
 
@@ -86,6 +85,22 @@ void dll_remove(t_dll *dll, t_dll_node *node)
   }
 }
 
+t_dll_node	*dll_find(t_dll *dll, void *target, int (*cmp)(void *, void *))
+{
+	t_dll_node	*temp;
+
+	if (!dll->head || !dll->tail)
+		return (NULL);
+	temp = dll->head;
+	while (temp)
+	{
+		if (cmp(temp->data, target))
+			return (temp);
+		temp = temp->next;
+	}
+	return (NULL);
+}
+
 void print_dll(t_dll *dll)
 {
   t_dll_node *itr;
@@ -98,7 +113,7 @@ void print_dll(t_dll *dll)
   while (itr)
   {
     printf("current: %p\n", itr);
-    printf("data: %s\n", itr->data);
+    printf("data: %s\n", (char *)itr->data);
     printf("next: %p\n", itr->next);
     printf("prev: %p\n", itr->prev);
     itr = itr->next;

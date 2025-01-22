@@ -1,6 +1,6 @@
 #include "../../../includes/containers.h"
 
-t_dll_node *new_node(char *data)
+t_dll_node *new_node(void *data)
 {
   t_dll_node *node;
 
