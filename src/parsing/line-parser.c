@@ -71,7 +71,6 @@ bool validate_mc(t_dll *dll, t_dll_node *itr, char meta)
 {
   if (ft_strchr(PIPE, meta) || ft_strchr(AMPERSAND, meta))
   {
-    printf("%p\n", itr->prev);
     if (!itr->next)
       return (false);
     else if (!itr->prev || ft_strchr(METACHARACTER, *(char *)itr->prev->data))
