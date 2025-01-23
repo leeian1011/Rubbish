@@ -13,8 +13,9 @@ int main()
   dll_append(dll, "fuck bro");
   dll_append(dll, "kanina");
   print_dll(dll);
-  dll_remove(dll, dll->head->next->next);
+  // dll_remove(dll, dll->head->next->next);
   printf("===========================\n");
+  dll_remove(dll, dll->tail);
   print_dll(dll);
   return (0);
 }

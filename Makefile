@@ -18,8 +18,12 @@ $(NAME): $(OBJ) $(LIBFT)
 $(LIBFT):
 	make -C $(DIR_LIBFT) bonus
 
+test_lp:
+	$(CC) $(FLAGS) src/containers/dll/dll.c src/containers/dll/dll_node.c src/parsing/line-parser.c src/parsing/line-parser-test.c $(LIBFT)
+
 test_dll:
 	$(CC) $(FLAGS) src/containers/dll/dll_test.c src/containers/dll/dll.c src/containers/dll/dll_node.c
+
 
 clean:
 	rm -f src/*.o
