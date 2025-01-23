@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 21:03:56 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/22 23:59:33 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/23 16:45:58 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,10 @@ void	tree_postorder_traversal(t_tree *head)
 // 	root = tree_create_node(ft_strdup("1"));
 // 	tree_make_child(&root, ft_strdup("2"));
 // 	tree_make_child(&root, ft_strdup("3"));
-// 	tree_make_child(&root, ft_strdup("4"));
-// 	tree_make_child(&root, ft_strdup("5"));
 // 	child = root->childs->head->data;
 // 	tree_make_child(&child, ft_strdup("6"));
 // 	tree_make_child(&child, ft_strdup("7"));
+// 	child = root->childs->head->next->data;
 // 	tree_make_child(&child, ft_strdup("8"));
 // 	tree_make_child(&child, ft_strdup("9"));
 // 	tree_postorder_traversal(root);
