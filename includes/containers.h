@@ -30,6 +30,14 @@ typedef struct s_hashmap
 	t_dll	**arr;
 }		t_hashmap;
 
+typedef struct s_tree
+{
+	t_dll			*childs;
+	void			*item;
+
+}			t_tree;
+
+// doubly linked list
 void print_dll(t_dll *dll);
 
 t_dll_node *new_node(void *data);
@@ -41,11 +49,18 @@ void *dll_prepend(t_dll *dll, void *data);
 void dll_remove(t_dll *dll, t_dll_node *node);
 t_dll_node	*dll_find(t_dll *dll, void *target, int (*cmp)(void *, void *));
 
+// hashmap
 int		hashing(t_hashmap *hashmap, char *key);
 int		cmp(void *value, void *target);
 void	init_hashmap(t_hashmap *hashmap);
-void	insert(t_hashmap *hashmap, char *key, char *value);
-void	delete(t_hashmap *hashmap, char *key);
-char	*search(t_hashmap *hashmap, char *key);
+void	hash_insert(t_hashmap *hashmap, char *key, char *value);
+void	hash_delete(t_hashmap *hashmap, char *key);
+char	*hash_search(t_hashmap *hashmap, char *key);
+
+// general tree
+t_tree	*tree_create_node(void *item);
+void	tree_make_child(t_tree **root, void *item);
+void	tree_postorder_traversal(t_tree *head);
+void	execute_tree_node(t_tree *head);
 
 #endif
