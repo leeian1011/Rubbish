@@ -105,17 +105,17 @@ void print_dll(t_dll *dll)
 {
   t_dll_node *itr;
 
-  printf("dll_addr -> %p\n", dll);
-  printf("dllhead_addr -> %p\n", dll->head);
-  printf("dlltail_addr -> %p\n", dll->tail);
-  printf("dlltail_len -> %u\n", dll->len);
+  // printf("dll_addr -> %p\n", dll);
+  // printf("dllhead_addr -> %p\n", dll->head);
+  // printf("dlltail_addr -> %p\n", dll->tail);
+  // printf("dlltail_len -> %u\n", dll->len);
   itr = dll->head;
   while (itr)
   {
-    printf("current: %p\n", itr);
+    // printf("current: %p\n", itr);
     printf("data: %s\n", (char *)itr->data);
-    printf("next: %p\n", itr->next);
-    printf("prev: %p\n", itr->prev);
+    // printf("next: %p\n", itr->next);
+    // printf("prev: %p\n", itr->prev);
     itr = itr->next;
   }
 }

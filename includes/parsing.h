@@ -16,6 +16,7 @@
 # include "binary_tree.h"
 # include "pipe_operator.h"
 # include "../src/libft/libft.h"
+# include "../includes/containers.h"
 
 # define META BLANK PIPE OB CB OA CA
 # define BLANK SPACE TAB
@@ -24,7 +25,9 @@
 
 # define OPERATOR CONTROL_OPERATOR REDIRECTION_OPERATOR
 
+# define METACHARACTER PIPE OA CA AMPERSAND
 # define CONTROL_OPERATOR AND OR PIPE OB CB
+# define AMPERSAND "&"
 # define AND "&&"
 # define OR "||"
 # define PIPE "|"
@@ -68,5 +71,6 @@ typedef struct b_tokens
 }		t_tokens;
 
 void	split_token(t_btree *node);
+bool parse_line(t_dll *dll, char *line);
 
 #endif // !PARSING_H
