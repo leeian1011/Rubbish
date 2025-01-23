@@ -6,15 +6,14 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 13:22:46 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/20 19:23:45 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/23 17:11:10 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
-# include "binary_tree.h"
-# include "pipe_operator.h"
+# include "./pipe_operator.h"
 # include "../src/libft/libft.h"
 # include "../includes/containers.h"
 
@@ -70,7 +69,6 @@ typedef struct b_tokens
 	int			*outputfds;
 }		t_tokens;
 
-void	split_token(t_btree *node);
 bool parse_line(t_dll *dll, char *line);
 
 #endif // !PARSING_H
