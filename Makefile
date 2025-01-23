@@ -1,13 +1,14 @@
 NAME = minishell
 DIR_LIBFT=src/libft
 LIBFT=$(DIR_LIBFT)/libft.a
-SOURCE = \
-				 src/pipes/pipe_operator.c
 OBJ = $(SOURCE:.c=.o)
 FLAGS = -Wall -Wextra -Werror
 CC = cc
 
 all: $(NAME)
+
+rubbish:
+	$(CC) $(SOURCE) -o rbsh
 
 $(NAME): $(OBJ) $(LIBFT)
 	$(CC) $^ -I$(DIR_LIBFT) -o $(NAME)
@@ -19,7 +20,7 @@ $(LIBFT):
 	make -C $(DIR_LIBFT) bonus
 
 test_lp:
-	$(CC) $(FLAGS) src/containers/dll/dll.c src/containers/dll/dll_node.c src/parsing/line-parser.c src/parsing/line-parser-test.c $(LIBFT)
+	$(CC) src/containers/dll/dll.c src/containers/dll/dll_node.c src/parsing/line-parser.c src/rubbish.c $(LIBFT)
 
 test_dll:
 	$(CC) $(FLAGS) src/containers/dll/dll_test.c src/containers/dll/dll.c src/containers/dll/dll_node.c
