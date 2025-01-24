@@ -6,16 +6,12 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 18:10:59 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/24 22:00:16 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/24 22:16:30 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/containers.h"
 #include "../../includes/parsing.h"
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
-
 
 t_tree	*init_list(t_dll *expression)
 {
