@@ -66,15 +66,31 @@ void dll_remove(t_dll *dll, t_dll_node *node)
 
   if (dll->head == node)
   {
-    node->next->prev = NULL;
-    dll->head = node->next;
-    free(node);
+    if (node->next)
+    {
+      node->next->prev = NULL;
+      dll->head = node->next;
+    }
+    else
+    {
+      free(node);
+      dll->head = NULL;
+      dll->tail = NULL;
+    }
   }
   else if (dll->tail == node)
   {
-    node->prev->next = NULL;
-    dll->tail = node->prev;
-    free(node);
+    if (node->prev)
+    {
+      node->prev->next = NULL;
+      dll->tail = node->next;
+    }
+    else
+    {
+      free(node);
+      dll->head = NULL;
+      dll->tail = NULL;
+    }
   }
   else
   {
@@ -83,6 +99,7 @@ void dll_remove(t_dll *dll, t_dll_node *node)
     node->next->prev = node->prev;
     free(temp);
   }
+  dll->len -= 1;
 }
 
 t_dll_node	*dll_find(t_dll *dll, void *target, int (*cmp)(void *, void *))
@@ -105,10 +122,10 @@ void print_dll(t_dll *dll)
 {
   t_dll_node *itr;
 
-  // printf("dll_addr -> %p\n", dll);
-  // printf("dllhead_addr -> %p\n", dll->head);
-  // printf("dlltail_addr -> %p\n", dll->tail);
-  // printf("dlltail_len -> %u\n", dll->len);
+  printf("dll_addr -> %p\n", dll);
+  printf("dllhead_addr -> %p\n", dll->head);
+  printf("dlltail_addr -> %p\n", dll->tail);
+  printf("dlltail_len -> %u\n", dll->len);
   itr = dll->head;
   while (itr)
   {
@@ -118,4 +135,11 @@ void print_dll(t_dll *dll)
     // printf("prev: %p\n", itr->prev);
     itr = itr->next;
   }
+}
+
+void dll_clear(t_dll *dll)
+{
+  while (dll->head)
+    dll_remove(dll, dll->head);
+  dll->tail = NULL;
 }

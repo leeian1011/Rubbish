@@ -17,5 +17,8 @@ int main()
   printf("===========================\n");
   dll_remove(dll, dll->tail);
   print_dll(dll);
+  printf("===========================\n");
+  dll_clear(dll);
+  print_dll(dll);
   return (0);
 }

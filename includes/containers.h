@@ -47,6 +47,7 @@ t_dll *dll_init();
 void *dll_append(t_dll *dll, void *data);
 void *dll_prepend(t_dll *dll, void *data);
 void dll_remove(t_dll *dll, t_dll_node *node);
+void dll_clear(t_dll* dll);
 t_dll_node	*dll_find(t_dll *dll, void *target, int (*cmp)(void *, void *));
 
 // hashmap
