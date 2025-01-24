@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 17:02:34 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/23 17:17:27 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/24 16:41:18 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(int argc, char **argv, char **env)
 			printf("parsing error\n");
 			continue ;
 		}
-		print_dll(dll);
+		/*print_dll(dll);*/
+		ast_build(dll);
 	}
 }

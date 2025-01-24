@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 13:22:46 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/23 17:11:10 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/24 16:25:48 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,8 @@ typedef enum b_token_type
 	EXPRESSION,
 	GROUPING,
 	LIST,
-	LIST_TAIL,
 	PIPELINE,
-	PIPELINE_TAIL,
 	SIMPLE_COMMAND,
-	SIMPLE_COMMAND_TAIL,
 	ARGUMENTS,
 	ARGUMENT,
 	REDIRECTIONS,
@@ -69,6 +66,16 @@ typedef struct b_tokens
 	int			*outputfds;
 }		t_tokens;
 
+typedef struct s_ast
+{
+	t_token_type	type;
+	char	*delimiter;
+	t_dll	*tokens;
+
+}	t_ast;
+
 bool parse_line(t_dll *dll, char *line);
+
+t_tree	*ast_build(t_dll *expression);
 
 #endif // !PARSING_H

@@ -124,6 +124,29 @@ t_dll_node	*dll_find(t_dll *dll, void *target, int (*cmp)(void *, void *))
 	return (NULL);
 }
 
+/*t_dll		**dll_split(t_dll *dll, void *delimiter, int (*cmp)(void *, void *))*/
+/*{*/
+/*	t_dll	**result;*/
+/*	t_dll_node	*start;*/
+/*	t_dll_node	*current;*/
+/*	int		result_idx;*/
+/**/
+/*	if (!dll->head || !dll->tail)*/
+/*		return (NULL);*/
+/*	current = dll->head;*/
+/*	result_idx = 0;*/
+/*	while (current)*/
+/*	{*/
+/*		if (cmp(current->data, delimiter))*/
+/*		{*/
+/*			result[result_idx] = create_subdll(start, current);*/
+/*			start = current;*/
+/*		}*/
+/*		current = current->next;*/
+/*	}*/
+/*	return (result);*/
+/*}*/
+
 void print_dll(t_dll *dll)
 {
   t_dll_node *itr;

@@ -6,11 +6,12 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 21:03:56 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/22 23:59:33 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/24 22:04:27 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/containers.h"
+#include "../../../includes/parsing.h"
 
 t_tree	*tree_create_node(void *item)
 {
@@ -46,15 +47,18 @@ void	tree_postorder_traversal(t_tree *head)
 	t_dll	*nodes;
 	t_dll_node	*current_node;
 
-	nodes = (t_dll *)head->childs;
+	nodes = head->childs;
 	current_node = nodes->head;
 	while (current_node)
 	{
 		tree_postorder_traversal((t_tree *)current_node->data);
 		current_node = current_node->next;
 	}
-	printf("before :%s\n",(char *)head->item);
-	// execute_node(head);
+	t_ast	*data = head->item;
+	t_dll *dll = data->tokens;
+	print_dll(dll);
+	printf("\nnext\n");
+	/*printf("%s\n", (char *)dll->head->data);*/
 }
 
 // int	main(void)
