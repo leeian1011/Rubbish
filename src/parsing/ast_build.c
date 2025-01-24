@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 18:10:59 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/24 22:16:30 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/24 22:41:37 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ t_tree	*init_list(t_dll *expression)
 	return (tree_create_node(data));
 }
 
-int	pipe_cmp(void *value, void *target)
+int	pipe_cmp(void *value)
 {
 	char	*t_value;
-	char	*t_target;
 
 	t_value = (char *)value;
-	t_target = (char *)target;
-	if (ft_strnstr(t_target, t_value, ft_strlen(t_target)))
+	if (!ft_strncmp(t_value, AND, 2))
+		 return (1);
+	if (!ft_strncmp(t_value, OR, 2))
 		 return (1);
 	return (0);
 }
@@ -50,7 +50,7 @@ t_dll	*split_dll(t_dll *tokens, char *delimeter)
 	working_dll = child_tokens->head->data;
 	while (current)
 	{
-		if (pipe_cmp(current->data, delimeter))
+		if (pipe_cmp(current->data))
 		{
 			dll_append(child_tokens, dll_init());
 			working_dll = child_tokens->tail->data;
