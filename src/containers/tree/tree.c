@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 21:03:56 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/25 20:53:50 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/26 00:33:04 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,18 @@ void	tree_make_child(t_tree **head, void *item)
 		return ;
 	}
 	dll_append((*head)->childs, tree_create_node(item));
+}
+
+void	tree_make_child_reversed(t_tree **head, void *item)
+{
+	if (!head)
+		return ;
+	if (!*head)
+	{
+		tree_create_node(item);
+		return ;
+	}
+	dll_prepend((*head)->childs, tree_create_node(item));
 }
 
 void	execute_tree_node(t_tree *head)

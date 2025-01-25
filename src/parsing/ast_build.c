@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 18:10:59 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/25 21:09:03 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/26 00:35:44 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,15 @@ void	base_executables_helper(t_tree *simple_cmd, bool is_arg)
 	data = ast_data_init();
 	data->tokens = arg_group;
 	if (is_arg)
+	{
 		data->type = ARGUMENTS;
+		tree_make_child(&simple_cmd, data);
+	}
 	else
+	{
 		data->type = GROUPING;
-	tree_make_child(&simple_cmd, data);
+		tree_make_child_reversed(&simple_cmd, data);
+	}
 }
 
 void	create_base_executables(t_tree *simple_cmd)

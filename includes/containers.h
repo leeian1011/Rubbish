@@ -62,6 +62,7 @@ char	*hash_search(t_hashmap *hashmap, char *key);
 // general tree
 t_tree	*tree_create_node(void *item);
 void	tree_make_child(t_tree **root, void *item);
+void	tree_make_child_reversed(t_tree **head, void *item);
 void	tree_postorder_traversal(t_tree *head);
 void	execute_tree_node(t_tree *head);
 
