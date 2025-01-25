@@ -60,7 +60,7 @@ void *dll_prepend(t_dll *dll, void *data)
   return (dll);
 }
 
-void dll_remove(t_dll *dll, t_dll_node *node)
+void dll_remove(t_dll *dll, t_dll_node *node, void *(f)(void *))
 {
   t_dll_node *temp;
 
@@ -73,6 +73,8 @@ void dll_remove(t_dll *dll, t_dll_node *node)
     }
     else
     {
+      if (f != NULL)
+        f(node);
       free(node);
       dll->head = NULL;
       dll->tail = NULL;
@@ -87,6 +89,8 @@ void dll_remove(t_dll *dll, t_dll_node *node)
     }
     else
     {
+      if (f != NULL)
+        f(node);
       free(node);
       dll->head = NULL;
       dll->tail = NULL;
@@ -97,6 +101,8 @@ void dll_remove(t_dll *dll, t_dll_node *node)
     temp = node;
     node->prev->next = node->next;
     node->next->prev = node->prev;
+    if (f != NULL)
+      f(node);
     free(temp);
   }
   dll->len -= 1;
@@ -140,6 +146,6 @@ void print_dll(t_dll *dll)
 void dll_clear(t_dll *dll)
 {
   while (dll->head)
-    dll_remove(dll, dll->head);
+    dll_remove(dll, dll->head, NULL);
   dll->tail = NULL;
 }
