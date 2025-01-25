@@ -59,7 +59,7 @@ static bool cat_meta(t_dll *dll, t_dll_node *itr, char meta)
   temp = itr->data;
   itr->data = ft_strjoin(temp, itr->next->data);
   free(temp);
-  dll_remove(dll, itr->next);
+  dll_remove(dll, itr->next, NULL);
   if (ft_strncmp((char *)itr->next->data, &meta, 1) == 0)
     return (false);
   return (true);
@@ -121,7 +121,7 @@ bool sanity_check(t_dll *dll)
   {
     temp = itr->next;
     if (is_whitespace(*(char *)itr->data))
-      dll_remove(dll, itr);
+      dll_remove(dll, itr, NULL);
     itr = temp;
   }
   itr = dll->head;

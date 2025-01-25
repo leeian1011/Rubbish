@@ -59,7 +59,7 @@ void	hash_delete(t_hashmap *hashmap, char *key)
 	nodes = hashmap->arr[index];
 	node = dll_find(nodes, key, cmp);
 	if (node)
-		dll_remove(nodes, node);
+		dll_remove(nodes, node, NULL);
 }
 
 char	*hash_search(t_hashmap *hashmap, char *key)
