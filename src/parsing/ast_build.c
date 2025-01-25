@@ -6,13 +6,11 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 18:10:59 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/25 16:49:34 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/25 21:09:03 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/containers.h"
 #include "../../includes/parsing.h"
-#include <stdio.h>
 
 t_tree	*init_list(t_dll *expression)
 {
@@ -25,51 +23,6 @@ t_tree	*init_list(t_dll *expression)
 	data->delimiter = NULL;
 	data->tokens = expression;
 	return (tree_create_node(data));
-}
-
-int	pipe_cmp(void *value)
-{
-	char	*t_value;
-
-	t_value = (char *)value;
-	if (!ft_strncmp(t_value, AND, 3))
-		 return (1);
-	if (!ft_strncmp(t_value, OR, 3))
-		 return (1);
-	return (0);
-}
-
-int	simple_cmd_cmp(void *value)
-{
-	char	*t_value;
-
-	t_value = (char *)value;
-	if (!ft_strncmp(t_value, PIPE, 2))
-		 return (1);
-	return (0);
-}
-
-t_dll	*split_dll(t_dll *tokens, int (*cmp)(void *))
-{
-	t_dll	*child_tokens;
-	t_dll	*working_dll;
-	t_dll_node	*current;
-
-	child_tokens = dll_init();
-	current = tokens->head;
-	dll_append(child_tokens, dll_init());
-	working_dll = child_tokens->head->data;
-	while (current)
-	{
-		if (cmp(current->data))
-		{
-			dll_append(child_tokens, dll_init());
-			working_dll = child_tokens->tail->data;
-		}
-		dll_append(working_dll, current->data);
-		current = current->next;
-	}
-	return (child_tokens);
 }
 
 void	create_pipelines(t_tree *root)
@@ -86,9 +39,7 @@ void	create_pipelines(t_tree *root)
 	temp = child_tokens->head;
 	while (temp)
 	{
-		data = ft_calloc(1, sizeof(t_ast));
-		if (!data)
-			return ;
+		data = ast_data_init();
 		data->tokens = temp->data;
 		data->type = PIPELINE;
 		tree_make_child(&root, data);
@@ -115,9 +66,7 @@ void	create_simple_cmds(t_tree *pipeline)
 	temp = child_tokens->head;
 	while (temp)
 	{
-		data = ft_calloc(1, sizeof(t_ast));
-		if (!data)
-			return ;
+		data = ast_data_init();
 		data->tokens = temp->data;
 		data->type = SIMPLE_COMMAND;
 		tree_make_child(&pipeline, data);
@@ -125,9 +74,63 @@ void	create_simple_cmds(t_tree *pipeline)
 	}
 }
 
+void	extract_redirections(t_dll *tokens, t_dll **redirections, t_dll **temp)
+{
+	t_dll_node	*current;
+
+	current = tokens->head;
+	*temp = dll_init();
+	*redirections = dll_init();
+	while (current)
+	{
+		if (redirection_cmp(current->data))
+		{
+			dll_append(*redirections, current->data);
+			current = current->next;
+			dll_append(*redirections, current->data);
+		}
+		else
+			dll_append(*temp, current->data);
+		current = current->next;
+	}
+}
+
+void	base_executables_helper(t_tree *simple_cmd, bool is_arg)
+{
+	t_ast	*data;
+	t_dll	*redirections;
+	t_dll	*arg_group;
+	t_dll	*tokens;
+
+	tokens = ((t_ast *)simple_cmd->item)->tokens;
+	extract_redirections(tokens, &redirections, &arg_group);
+	data = ast_data_init();
+	data->tokens = redirections;
+	data->type = REDIRECTIONS;
+	tree_make_child(&simple_cmd, data);
+	data = ast_data_init();
+	data->tokens = arg_group;
+	if (is_arg)
+		data->type = ARGUMENTS;
+	else
+		data->type = GROUPING;
+	tree_make_child(&simple_cmd, data);
+}
+
 void	create_base_executables(t_tree *simple_cmd)
 {
+	t_dll	*tokens;
 
+	tokens = ((t_ast *)simple_cmd->item)->tokens;
+	if (simple_cmd_cmp(tokens->head->data))
+	{
+		((t_ast *)simple_cmd->item)->delimiter = tokens->head->data;
+		dll_remove(tokens, tokens->head);
+	}
+	if (ft_strncmp(OB, tokens->head->data, 2))
+		base_executables_helper(simple_cmd, true);
+	else
+		base_executables_helper(simple_cmd, false);
 }
 
 t_tree	*ast_build(t_dll *expression)
@@ -145,7 +148,7 @@ t_tree	*ast_build(t_dll *expression)
 		simple_cmds = ((t_tree *)pipelines->data)->childs->head;
 		while (simple_cmds)
 		{
-			create_base_executables(simple_cmds);
+			create_base_executables(simple_cmds->data);
 			simple_cmds = simple_cmds->next;
 		}
 		pipelines = pipelines->next;

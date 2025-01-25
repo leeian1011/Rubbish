@@ -21,7 +21,8 @@ $(LIBFT):
 
 test_lp:
 	$(CC) src/containers/dll/dll.c src/containers/dll/dll_node.c src/parsing/line-parser.c \
-		src/containers/tree/tree.c src/parsing/ast_build.c src/rubbish.c $(LIBFT)
+		src/containers/tree/tree.c src/parsing/ast_build.c src/parsing/ast_utils.c src/rubbish.c \
+		src/parsing/ast_cmp.c $(LIBFT)
 
 test_dll:
 	$(CC) $(FLAGS) src/containers/dll/dll_test.c src/containers/dll/dll.c src/containers/dll/dll_node.c

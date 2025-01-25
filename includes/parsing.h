@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 13:22:46 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/24 16:25:48 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/25 20:57:49 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,8 @@ typedef enum b_token_type
 	ARGUMENTS,
 	ARGUMENT,
 	REDIRECTIONS,
-	REDIRECTION,
 	REDIRECTION_OP,
-	WORD
+	UNSET
 }	t_token_type;
 
 typedef struct b_tokens
@@ -77,5 +76,12 @@ typedef struct s_ast
 bool parse_line(t_dll *dll, char *line);
 
 t_tree	*ast_build(t_dll *expression);
+
+t_dll	*split_dll(t_dll *tokens, int (*cmp)(void *));
+t_ast	*ast_data_init(void);
+  
+int		pipe_cmp(void *value);
+int		simple_cmd_cmp(void *value);
+int		redirection_cmp(void *value);
 
 #endif // !PARSING_H

@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 21:03:56 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/25 16:41:48 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/25 20:53:50 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,11 @@ void	tree_postorder_traversal(t_tree *head)
 	if (data->type == SIMPLE_COMMAND)
 		printf("SIMPLE_COMMAND\n");
 	if (data->type == LIST)
-		printf("LISt\n");
+		printf("LIST\n");
+	if (data->type == ARGUMENTS)
+		printf("ARGUMENTS\n");
+	if (data->type == REDIRECTIONS)
+		printf("REDIRECTIONS\n");
 	print_dll(dll);
 	/*printf("%s\n", data->delimiter);*/
 	printf("\nnext\n");
