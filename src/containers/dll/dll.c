@@ -128,10 +128,10 @@ void print_dll(t_dll *dll)
 {
   t_dll_node *itr;
 
-  printf("dll_addr -> %p\n", dll);
-  printf("dllhead_addr -> %p\n", dll->head);
-  printf("dlltail_addr -> %p\n", dll->tail);
-  printf("dlltail_len -> %u\n", dll->len);
+  /*printf("dll_addr -> %p\n", dll);*/
+  /*printf("dllhead_addr -> %p\n", dll->head);*/
+  /*printf("dlltail_addr -> %p\n", dll->tail);*/
+  /*printf("dlltail_len -> %u\n", dll->len);*/
   itr = dll->head;
   while (itr)
   {
