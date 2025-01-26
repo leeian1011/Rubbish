@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 18:10:59 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/26 09:17:03 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/26 23:46:58 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void	base_executables_helper(t_tree *simple_cmd, bool is_arg)
 	else
 	{
 		data->type = GROUPING;
-		tree_make_child_reversed(&simple_cmd, data);
+		tree_make_child(&simple_cmd, data);
 	}
 }
 
