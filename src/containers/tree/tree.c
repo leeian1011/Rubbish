@@ -6,11 +6,13 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 21:03:56 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/22 23:59:33 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/26 00:33:04 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/containers.h"
+#include "../../../includes/parsing.h"
+#include <stdio.h>
 
 t_tree	*tree_create_node(void *item)
 {
@@ -36,6 +38,18 @@ void	tree_make_child(t_tree **head, void *item)
 	dll_append((*head)->childs, tree_create_node(item));
 }
 
+void	tree_make_child_reversed(t_tree **head, void *item)
+{
+	if (!head)
+		return ;
+	if (!*head)
+	{
+		tree_create_node(item);
+		return ;
+	}
+	dll_prepend((*head)->childs, tree_create_node(item));
+}
+
 void	execute_tree_node(t_tree *head)
 {
 	printf("%s\n",(char *)head->item);
@@ -46,15 +60,31 @@ void	tree_postorder_traversal(t_tree *head)
 	t_dll	*nodes;
 	t_dll_node	*current_node;
 
-	nodes = (t_dll *)head->childs;
+	nodes = head->childs;
 	current_node = nodes->head;
 	while (current_node)
 	{
 		tree_postorder_traversal((t_tree *)current_node->data);
 		current_node = current_node->next;
 	}
-	printf("before :%s\n",(char *)head->item);
-	// execute_node(head);
+	t_ast	*data = head->item;
+	t_dll *dll = data->tokens;
+	if (data->delimiter)
+		printf("delimter: %s\n", data->delimiter);
+	if (data->type == PIPELINE)
+		printf("pipline\n");
+	if (data->type == SIMPLE_COMMAND)
+		printf("SIMPLE_COMMAND\n");
+	if (data->type == LIST)
+		printf("LIST\n");
+	if (data->type == ARGUMENTS)
+		printf("ARGUMENTS\n");
+	if (data->type == REDIRECTIONS)
+		printf("REDIRECTIONS\n");
+	print_dll(dll);
+	/*printf("%s\n", data->delimiter);*/
+	printf("\nnext\n");
+	/*printf("%s\n", (char *)dll->head->data);*/
 }
 
 // int	main(void)
