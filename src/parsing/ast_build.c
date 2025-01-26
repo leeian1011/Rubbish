@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 18:10:59 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/26 00:35:44 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/26 09:17:03 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	create_simple_cmds(t_tree *pipeline)
 	if (pipe_cmp(tokens->head->data))
 	{
 		((t_ast *)pipeline->item)->delimiter = tokens->head->data;
-		dll_remove(tokens, tokens->head);
+		dll_remove(tokens, tokens->head, NULL);
 	}
 	child_tokens = split_dll(tokens, simple_cmd_cmp);
 	temp = child_tokens->head;
@@ -130,7 +130,7 @@ void	create_base_executables(t_tree *simple_cmd)
 	if (simple_cmd_cmp(tokens->head->data))
 	{
 		((t_ast *)simple_cmd->item)->delimiter = tokens->head->data;
-		dll_remove(tokens, tokens->head);
+		dll_remove(tokens, tokens->head, NULL);
 	}
 	if (ft_strncmp(OB, tokens->head->data, 2))
 		base_executables_helper(simple_cmd, true);
