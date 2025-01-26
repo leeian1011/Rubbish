@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 18:10:59 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/26 23:46:58 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/26 23:49:54 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	create_pipelines(t_tree *root)
 		tree_make_child(&root, data);
 		temp = temp->next;
 	}
+	free(child_tokens);
 }
 
 void	create_simple_cmds(t_tree *pipeline)
@@ -72,6 +73,7 @@ void	create_simple_cmds(t_tree *pipeline)
 		tree_make_child(&pipeline, data);
 		temp = temp->next;
 	}
+	free(child_tokens);
 }
 
 void	extract_redirections(t_dll *tokens, t_dll **redirections, t_dll **temp)
