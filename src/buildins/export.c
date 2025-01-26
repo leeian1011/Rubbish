@@ -6,8 +6,14 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:13:25 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/22 17:14:47 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/26 23:48:06 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
- 
+#include "../../includes/buildins.h"
+
+int	export(char *str)
+{
+
+	return (0);
+}
