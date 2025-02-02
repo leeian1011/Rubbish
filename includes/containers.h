@@ -57,8 +57,9 @@ int		cmp(void *value, void *target);
 void	init_hashmap(t_hashmap *hashmap);
 void	hash_insert(t_hashmap *hashmap, char *key, char *value);
 void	hash_delete(t_hashmap *hashmap, char *key);
-void	hash_print(t_hashmap *hashmap, char *prepend_str);
 char	*hash_search(t_hashmap *hashmap, char *key);
+char	**hash_get_all_keys(t_hashmap *hashmap);
+int		hash_count(t_hashmap *hashmap);
 
 // general tree
 t_tree	*tree_create_node(void *item);

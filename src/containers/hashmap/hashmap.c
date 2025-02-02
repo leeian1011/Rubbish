@@ -6,12 +6,11 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 19:49:30 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/27 12:12:49 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/02 23:11:55 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/containers.h"
-#include <stdio.h>
 
 void	init_hashmap(t_hashmap *hashmap)
 {
@@ -77,12 +76,14 @@ char	*hash_search(t_hashmap *hashmap, char *key)
 	return (((t_hashcontent *)node->data)->value);
 }
 
-void	hash_print(t_hashmap *hashmap, char *prepend_str)
+int		hash_count(t_hashmap *hashmap)
 {
+	int		i;
+	int		count;
 	t_dll	*dll;
 	t_dll_node	*temp;
-	int	i;
 
+	count	= 0;
 	i = 0;
 	while (i < hashmap->elem_num)
 	{
@@ -92,14 +93,43 @@ void	hash_print(t_hashmap *hashmap, char *prepend_str)
 			temp = dll->head;
 			while (temp)
 			{
-				if (prepend_str)
-					printf("%s ", prepend_str);
-				printf("%s=%s\n", ((t_hashcontent *)temp->data)->key, ((t_hashcontent *)temp->data)->value);
+				count++;
 				temp = temp->next;
 			}
 		}
 		i++;
 	}
+	return (count);
+}
+
+char	**hash_get_all_keys(t_hashmap *hashmap)
+{
+	char	**keys;
+	t_dll	*dll;
+	t_dll_node	*temp;
+	int	i;
+	int	key_idx;
+
+	keys = ft_calloc(sizeof(char *), hash_count(hashmap) + 1);
+	if (!keys)
+		return (NULL);
+	i = 0;
+	key_idx = 0;
+	while (i < hashmap->elem_num)
+	{
+		dll = hashmap->arr[i];
+		if (dll)
+		{
+			temp = dll->head;
+			while (temp)
+			{
+				keys[key_idx++] = ((t_hashcontent *)temp->data)->key;
+				temp = temp->next;
+			}
+		}
+		i++;
+	}
+	return (keys);
 }
 
 // int	main(void)
