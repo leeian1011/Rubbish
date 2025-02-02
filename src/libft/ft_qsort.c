@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 23:26:25 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/02 23:00:46 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/02 23:12:40 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,18 @@ void	ft_qsort(void *base, size_t nmemb, \
 	ft_qsort(base + ((i + 1) * size), nmemb - (i + 1), size, cmp);
 }
 
-int main()
-{
-    int arr[] = {3, 6, 8, 10, 1, 2, 1};
-    size_t nmemb = sizeof(arr) / sizeof(arr[0]);
-
-    ft_qsort(arr, nmemb, sizeof(int), int_cmp);
-
-    for (size_t i = 0; i < nmemb; i++)
-    {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-
-    return 0;
-}
+/*int main()*/
+/*{*/
+/*    int arr[] = {3, 6, 8, 10, 1, 2, 1};*/
+/*    size_t nmemb = sizeof(arr) / sizeof(arr[0]);*/
+/**/
+/*    ft_qsort(arr, nmemb, sizeof(int), int_cmp);*/
+/**/
+/*    for (size_t i = 0; i < nmemb; i++)*/
+/*    {*/
+/*        printf("%d ", arr[i]);*/
+/*    }*/
+/*    printf("\n");*/
+/**/
+/*    return 0;*/
+/*}*/

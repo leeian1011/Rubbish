@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:13:25 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/02 23:11:12 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/02 23:52:50 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,25 @@ int	export(t_hashmap *hashmap, char *str)
 	return (0);
 }
 
+/*int		env(t_hashmap *hashmap)*/
+/*{*/
+/*	char	**temp;*/
+/*	int		i;*/
+/**/
+/*	i = -1;*/
+/*	temp = hash_get_all_keys(hashmap);*/
+/*	while (temp[++i])*/
+/*		printf("%s=%s\n", temp[i], hash_search(hashmap, temp[i]));*/
+/*	return (0);*/
+/*}*/
+/*int		unset(t_hashmap *hashmap, char *key)*/
+/*{*/
+/*	if (!key)*/
+/*		return (0);*/
+/*	hash_delete(hashmap, key);*/
+/*	return (0);*/
+/*}*/
+/**/
 /*int	main(int argc, char **argv, char **envp)*/
 /*{*/
 /*	t_hashmap hashmap;*/
@@ -45,5 +64,13 @@ int	export(t_hashmap *hashmap, char *str)
 /*	init_hashmap(&hashmap);*/
 /*	while (*envp)*/
 /*		export(&hashmap, *envp++);*/
+	/*env(&hashmap);*/
+/*	unset(&hashmap, NULL);*/
+/*	export(&hashmap, NULL);*/
+/*	printf("+++++++++++++++++++++\n");*/
+/*	unset(&hashmap, "HOME");*/
+/*	export(&hashmap, NULL);*/
+/*	printf("+++++++++++++++++++++\n");*/
+/*	unset(&hashmap, "NON");*/
 /*	export(&hashmap, NULL);*/
 /*}*/
