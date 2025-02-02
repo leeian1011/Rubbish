@@ -6,11 +6,12 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 19:49:30 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/22 23:59:43 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/27 12:12:49 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/containers.h"
+#include <stdio.h>
 
 void	init_hashmap(t_hashmap *hashmap)
 {
@@ -19,7 +20,7 @@ void	init_hashmap(t_hashmap *hashmap)
 	i = 0;
 	hashmap->elem_num = 100;
 	hashmap->capacity = 0;
-	hashmap->arr = malloc(sizeof(t_dll *) * hashmap->elem_num);
+	hashmap->arr = ft_calloc(sizeof(t_dll *), hashmap->elem_num);
 	if (!hashmap->arr)
 		return ;
 	while (i < hashmap->elem_num)
@@ -74,6 +75,31 @@ char	*hash_search(t_hashmap *hashmap, char *key)
 	if (!node)
 		return (ft_strdup(""));
 	return (((t_hashcontent *)node->data)->value);
+}
+
+void	hash_print(t_hashmap *hashmap, char *prepend_str)
+{
+	t_dll	*dll;
+	t_dll_node	*temp;
+	int	i;
+
+	i = 0;
+	while (i < hashmap->elem_num)
+	{
+		dll = hashmap->arr[i];
+		if (dll)
+		{
+			temp = dll->head;
+			while (temp)
+			{
+				if (prepend_str)
+					printf("%s ", prepend_str);
+				printf("%s=%s\n", ((t_hashcontent *)temp->data)->key, ((t_hashcontent *)temp->data)->value);
+				temp = temp->next;
+			}
+		}
+		i++;
+	}
 }
 
 // int	main(void)

@@ -27,6 +27,9 @@ test_lp:
 test_dll:
 	$(CC) $(FLAGS) src/containers/dll/dll_test.c src/containers/dll/dll.c src/containers/dll/dll_node.c
 
+test_env:
+	$(CC) src/containers/dll/dll_node.c src/containers/dll/dll.c src/containers/hashmap/hashmap.c \
+	src/containers/hashmap/hashmap_utils.c src/buildins/export.c $(LIBFT)
 
 clean:
 	rm -f src/*.o
