@@ -9,7 +9,7 @@ SOURCE = \
 				ft_memchr.c ft_putchar_fd.c ft_strchr.c ft_strlcpy.c ft_strrchr.c \
 				ft_printf.c ft_printf_helper.c ft_printf_helper2.c ft_printf_insert.c\
 				ft_printf_precision.c ft_printf_utils.c get_next_line.c ft_split_ignore_qoutes.c \
-				free_all.c
+				free_all.c ft_qsort.c
 BONUS = \
 				ft_lstadd_back.c ft_lstclear.c ft_lstiter.c ft_lstmap.c \
 				ft_lstsize.c ft_lstadd_front.c ft_lstdelone.c ft_lstlast.c \

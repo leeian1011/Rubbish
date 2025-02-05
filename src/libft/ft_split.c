@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:16:14 by jianwong          #+#    #+#             */
-/*   Updated: 2024/12/27 16:49:55 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/02 16:30:22 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static char	**split_words(char **result, char const *s, char c)
 			result[++z] = make_str(s, c, &i);
 			if (!result[z])
 			{
-				free_all((void **)result);
+				free_all((void **)result, sizeof(char *));
 				return (NULL);
 			}
 		}

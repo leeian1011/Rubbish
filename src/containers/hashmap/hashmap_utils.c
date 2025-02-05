@@ -6,11 +6,12 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:06:17 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/22 17:07:07 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/01/27 12:05:12 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/containers.h"
+#include <stdio.h>
 
 int		hashing(t_hashmap *hashmap, char *key)
 {

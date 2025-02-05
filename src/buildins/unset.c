@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buildins.h                                         :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/19 21:16:16 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/27 00:23:14 by jianwong         ###   ########.fr       */
+/*   Created: 2025/02/02 23:18:16 by jianwong          #+#    #+#             */
+/*   Updated: 2025/02/02 23:52:52 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILDINS_H
-# define BUILDINS_H
+#include "../../includes/buildins.h"
 
-# include "../src/libft/libft.h"
-# include "../includes/containers.h"
-
-int		echo(char *input);
-int		pwd(void);
-void	exit(int exit_code);
-
-#endif
+int		unset(t_hashmap *hashmap, char *key)
+{
+	if (!key)
+		return (0);
+	hash_delete(hashmap, key);
+	return (0);
+}
