@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 18:10:59 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/26 23:49:54 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/07 14:48:16 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ t_tree	*ast_build(t_dll *expression)
 		}
 		pipelines = pipelines->next;
 	}
-	tree_postorder_traversal(root);
+	tree_postorder_traversal(root, execute_tree_node);
+	// tree_postorder_traversal(root);
 	return (root);
 }
