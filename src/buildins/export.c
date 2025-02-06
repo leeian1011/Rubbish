@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:13:25 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/02 23:52:50 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/06 14:03:06 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	str_cmp(const void *data1, const void *data2)
 	return (ft_strncmp(*(char **)data1, *(char **)data2, -1));
 }
 
-int	export(t_hashmap *hashmap, char *str)
+int	ft_export(t_hashmap *hashmap, char *str)
 {
 	char	**temp;
 	int		i;
