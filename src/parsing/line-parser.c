@@ -31,14 +31,22 @@ static char *extract_token(char **line)
       itr++;
     else if (is_closeable(*itr))
     {
-      if (*itr == '\(')
+      int count = 1;
+      char closeable = *itr++;
+      if (closeable == '\(')
         closeable_match = ')';
       else
-        closeable_match = *itr;
-      while (*++itr != closeable_match)
+        closeable_match = closeable;
+      while (count > 0)
+      {
         if (!*itr)
           return (NULL);
-      break ;
+        if (closeable == '\(' && *itr == closeable)
+          count++;
+        if (closeable == '\(' && *itr == closeable_match)
+          count--;
+        itr++;
+      }
     }
     else
       break ;
