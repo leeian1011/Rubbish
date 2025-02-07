@@ -50,42 +50,82 @@ void	tree_make_child_reversed(t_tree **head, void *item)
 	dll_prepend((*head)->childs, tree_create_node(item));
 }
 
-void	execute_tree_node(t_tree *head)
+void print_leave(t_tree *node, int depth)
 {
-	printf("%s\n",(char *)head->item);
+
+
 }
 
-void	tree_postorder_traversal(t_tree *head)
+void print_syntax(t_ast *syntax, int depth)
 {
-	t_dll	*nodes;
-	t_dll_node	*current_node;
-
-	nodes = head->childs;
-	current_node = nodes->head;
-	while (current_node)
-	{
-		tree_postorder_traversal((t_tree *)current_node->data);
-		current_node = current_node->next;
-	}
-	t_ast	*data = head->item;
-	t_dll *dll = data->tokens;
-	if (data->delimiter)
-		printf("delimter: %s\n", data->delimiter);
-	if (data->type == PIPELINE)
+  int i = 0;
+  while (i < depth * 4)
+  {
+    printf(" ");
+    i++;
+  }
+  i = 0;
+  printf("delimeter => %s\n", syntax->delimiter);
+  while (i < depth * 4)
+  {
+    printf(" ");
+    i++;
+  }
+	if (syntax->type == PIPELINE)
 		printf("pipline\n");
-	if (data->type == SIMPLE_COMMAND)
+	if (syntax->type == SIMPLE_COMMAND)
 		printf("SIMPLE_COMMAND\n");
-	if (data->type == LIST)
+	if (syntax->type == LIST)
 		printf("LIST\n");
-	if (data->type == ARGUMENTS)
+	if (syntax->type == ARGUMENTS)
+  {
+    t_dll_node *itr = syntax->tokens->head;
 		printf("ARGUMENTS\n");
-	if (data->type == REDIRECTIONS)
+    while (itr)
+    {
+      i = 0;
+      while (i < depth * 4)
+      {
+        printf(" ");
+        i++;
+      }
+      printf("argu token: %s\n", (char *)itr->data);
+      itr = itr->next;
+    }
+  }
+	if (syntax->type == REDIRECTIONS)
+  {
+    t_dll_node *itr = syntax->tokens->head;
 		printf("REDIRECTIONS\n");
-	print_dll(dll);
-	/*printf("%s\n", data->delimiter);*/
-	printf("\nnext\n");
-	/*printf("%s\n", (char *)dll->head->data);*/
+    while (itr)
+    {
+      i = 0;
+      while (i < depth * 4)
+      {
+        printf(" ");
+        i++;
+      }
+      printf("redirect token: %s\n", (char *)itr->data);
+      itr = itr->next;
+    }
+
+  }
 }
+
+void print_tree(t_tree *tree, int depth)
+{
+  t_dll_node *itr = tree->childs->head;
+  t_ast *syntax = (t_ast *)tree->item;
+  if (depth == 0)
+    printf("HEAD\n");
+  print_syntax(syntax, depth);
+  while (itr)
+  {
+    print_tree((t_tree *)itr->data, depth + 1);
+    itr = itr->next;
+  }
+}
+
 
 // int	main(void)
 // {
