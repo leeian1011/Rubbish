@@ -6,11 +6,12 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:30:52 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/07 15:59:01 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:25:28 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 static int	is_set(char c, char const *set)
 {

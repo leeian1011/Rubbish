@@ -47,6 +47,8 @@ static char *extract_token(char **line)
           count--;
         itr++;
       }
+			itr--;
+			break;
     }
     else
       break ;

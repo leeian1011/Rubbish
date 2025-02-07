@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 18:10:59 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/07 15:40:16 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:26:54 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,13 +104,13 @@ int	handle_grouping(t_tree *grouping)
 	t_dll	*split_token;
 	t_tree	*sub_tree;
 	char	*temp;
+	char	*temp2;
 
 	token = ((t_ast *)grouping->item)->tokens;
-	printf("%s\n", token->head->data);
-	temp = ft_strntrim(token->head->data, "()", 1);
-	printf("%s\n", temp);
+	temp = ft_strtrim(token->head->data, " ");
+	temp2 = ft_strntrim(temp, "()", 1);
 	split_token = dll_init();
-	if (!parse_line(split_token, temp))
+	if (!parse_line(split_token, temp2))
 	{
 		printf("parsing error\n");
 		return (1);
@@ -185,7 +185,5 @@ t_tree	*ast_build(t_dll *expression)
 		pipelines = pipelines->next;
 	}
 	print_tree(root, 0);
-	// tree_postorder_traversal(root, execute_tree_node);
-	// tree_postorder_traversal(root);
 	return (root);
 }
