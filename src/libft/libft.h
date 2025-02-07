@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:29:33 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/02 16:28:46 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/07 15:37:31 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char	*ft_strdup(const char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s1, char const *set);
+char	*ft_strntrim(char const *s1, char const *set, int count);
 char	**ft_split(char const *s, char c);
 void	free_all(void **vars, size_t size);
 char	*ft_itoa(int n);

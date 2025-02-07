@@ -6,11 +6,12 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 18:10:59 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/07 14:48:16 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/07 15:40:16 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/parsing.h"
+#include <stdio.h>
 
 t_tree	*init_list(t_dll *expression)
 {
@@ -97,6 +98,28 @@ void	extract_redirections(t_dll *tokens, t_dll **redirections, t_dll **temp)
 	}
 }
 
+int	handle_grouping(t_tree *grouping)
+{
+	t_dll	*token;
+	t_dll	*split_token;
+	t_tree	*sub_tree;
+	char	*temp;
+
+	token = ((t_ast *)grouping->item)->tokens;
+	printf("%s\n", token->head->data);
+	temp = ft_strntrim(token->head->data, "()", 1);
+	printf("%s\n", temp);
+	split_token = dll_init();
+	if (!parse_line(split_token, temp))
+	{
+		printf("parsing error\n");
+		return (1);
+	}
+	sub_tree = ast_build(split_token);
+	dll_append(grouping->childs, sub_tree);
+	return (0);
+}
+
 void	base_executables_helper(t_tree *simple_cmd, bool is_arg)
 {
 	t_ast	*data;
@@ -121,6 +144,7 @@ void	base_executables_helper(t_tree *simple_cmd, bool is_arg)
 	{
 		data->type = GROUPING;
 		tree_make_child(&simple_cmd, data);
+		handle_grouping(simple_cmd->childs->tail->data);
 	}
 }
 
@@ -134,7 +158,7 @@ void	create_base_executables(t_tree *simple_cmd)
 		((t_ast *)simple_cmd->item)->delimiter = tokens->head->data;
 		dll_remove(tokens, tokens->head, NULL);
 	}
-	if (ft_strncmp(OB, tokens->head->data, 2))
+	if (ft_strncmp(OB, tokens->head->data, 1))
 		base_executables_helper(simple_cmd, true);
 	else
 		base_executables_helper(simple_cmd, false);
@@ -160,7 +184,8 @@ t_tree	*ast_build(t_dll *expression)
 		}
 		pipelines = pipelines->next;
 	}
-	tree_postorder_traversal(root, execute_tree_node);
+	print_tree(root, 0);
+	// tree_postorder_traversal(root, execute_tree_node);
 	// tree_postorder_traversal(root);
 	return (root);
 }

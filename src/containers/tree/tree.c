@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 21:03:56 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/07 14:46:55 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/07 15:17:15 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,22 @@ void print_syntax(t_ast *syntax, int depth)
         i++;
       }
       printf("argu token: %s\n", (char *)itr->data);
+      itr = itr->next;
+    }
+  }
+	if (syntax->type == GROUPING)
+  {
+    t_dll_node *itr = syntax->tokens->head;
+		printf("GROUPING\n");
+    while (itr)
+    {
+      i = 0;
+      while (i < depth * 4)
+      {
+        printf(" ");
+        i++;
+      }
+      printf("grouping token: %s\n", (char *)itr->data);
       itr = itr->next;
     }
   }
