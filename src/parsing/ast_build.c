@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 18:10:59 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/07 17:26:54 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:52:32 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	handle_grouping(t_tree *grouping)
 	return (0);
 }
 
-void	base_executables_helper(t_tree *simple_cmd, bool is_arg)
+int	base_executables_helper(t_tree *simple_cmd, bool is_arg)
 {
 	t_ast	*data;
 	t_dll	*redirections;
@@ -144,11 +144,13 @@ void	base_executables_helper(t_tree *simple_cmd, bool is_arg)
 	{
 		data->type = GROUPING;
 		tree_make_child(&simple_cmd, data);
-		handle_grouping(simple_cmd->childs->tail->data);
+		if (handle_grouping(simple_cmd->childs->tail->data))
+			return (1);
 	}
+	return (0);
 }
 
-void	create_base_executables(t_tree *simple_cmd)
+int	create_base_executables(t_tree *simple_cmd)
 {
 	t_dll	*tokens;
 
@@ -161,7 +163,9 @@ void	create_base_executables(t_tree *simple_cmd)
 	if (ft_strncmp(OB, tokens->head->data, 1))
 		base_executables_helper(simple_cmd, true);
 	else
-		base_executables_helper(simple_cmd, false);
+		if(base_executables_helper(simple_cmd, false))
+			return (1);
+	return (0);
 }
 
 t_tree	*ast_build(t_dll *expression)
@@ -179,7 +183,11 @@ t_tree	*ast_build(t_dll *expression)
 		simple_cmds = ((t_tree *)pipelines->data)->childs->head;
 		while (simple_cmds)
 		{
-			create_base_executables(simple_cmds->data);
+			if (create_base_executables(simple_cmds->data))
+			{
+				tree_postorder_traversal(root, free_tree);
+				return (NULL);
+			}
 			simple_cmds = simple_cmds->next;
 		}
 		pipelines = pipelines->next;

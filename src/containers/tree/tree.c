@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 21:03:56 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/07 15:17:15 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/07 23:33:03 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ void	tree_make_child(t_tree **head, void *item)
 		tree_create_node(item);
 		return ;
 	}
-	dll_append((*head)->childs, tree_create_node(item));
-}
-
+	dll_append((*head)->childs, tree_create_node(item)); }
 void	tree_make_child_reversed(t_tree **head, void *item)
 {
 	if (!head)
@@ -48,11 +46,6 @@ void	tree_make_child_reversed(t_tree **head, void *item)
 	dll_prepend((*head)->childs, tree_create_node(item));
 }
 
-void	free_tree(t_tree **head, void (*free_data)(void *))
-{
-
-
-}
 
 void print_syntax(t_ast *syntax, int depth)
 {
@@ -125,14 +118,16 @@ void print_syntax(t_ast *syntax, int depth)
   }
 }
 
-// void	execute_tree_node(t_tree *head)
-// {
-// 	t_ast	*data = head->item;
-// 	t_dll *dll = data->tokens;
-//
-// 	if (data->delimiter)
-// 		printf("delimter: %s\n", data->delimiter);
-// 	if (data->type == PIPELINE)
+void	execute_tree_node(t_tree *head)
+{
+	// DO SOMETHING
+}
+
+void	free_tree(t_tree *head)
+{
+	dll_clear(((t_ast *)head->item)->tokens);
+	free(head);
+}
 
 void print_tree(t_tree *tree, int depth)
 {
@@ -161,6 +156,21 @@ void	tree_postorder_traversal(t_tree *head, void (*exec)(t_tree *))
 		current_node = current_node->next;
 	}
 	exec(head);
+}
+
+void	tree_preorder_traversal(t_tree *head, void (*exec)(t_tree *))
+{
+	t_dll	*nodes;
+	t_dll_node	*current_node;
+
+	nodes = head->childs;
+	current_node = nodes->head;
+	exec(head);
+	while (current_node)
+	{
+		tree_postorder_traversal((t_tree *)current_node->data, exec);
+		current_node = current_node->next;
+	}
 }
 
 // void	tree_postorder_traversal(t_tree *head)
