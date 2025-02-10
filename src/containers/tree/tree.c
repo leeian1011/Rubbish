@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 21:03:56 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/07 23:33:03 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/11 01:20:00 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ t_tree	*tree_create_node(void *item)
 	t_tree	*new_node;
 
 	new_node = malloc(sizeof(t_tree));
-	if (!new_node) return (NULL); new_node->childs = dll_init();
+	if (!new_node)
+		return (NULL); 
+	new_node->childs = dll_init();
 	new_node->item = item;
 	return (new_node);
 }
@@ -33,7 +35,9 @@ void	tree_make_child(t_tree **head, void *item)
 		tree_create_node(item);
 		return ;
 	}
-	dll_append((*head)->childs, tree_create_node(item)); }
+	dll_append((*head)->childs, tree_create_node(item)); 
+}
+
 void	tree_make_child_reversed(t_tree **head, void *item)
 {
 	if (!head)
@@ -45,7 +49,6 @@ void	tree_make_child_reversed(t_tree **head, void *item)
 	}
 	dll_prepend((*head)->childs, tree_create_node(item));
 }
-
 
 void print_syntax(t_ast *syntax, int depth)
 {
@@ -114,7 +117,6 @@ void print_syntax(t_ast *syntax, int depth)
       printf("redirect token: %s\n", (char *)itr->data);
       itr = itr->next;
     }
-
   }
 }
 
@@ -126,6 +128,10 @@ void	execute_tree_node(t_tree *head)
 void	free_tree(t_tree *head)
 {
 	dll_clear(((t_ast *)head->item)->tokens);
+	free(((t_ast *)head->item)->tokens);
+	free(head->item);
+	dll_clear(head->childs);
+	free(head->childs);
 	free(head);
 }
 
@@ -172,38 +178,6 @@ void	tree_preorder_traversal(t_tree *head, void (*exec)(t_tree *))
 		current_node = current_node->next;
 	}
 }
-
-// void	tree_postorder_traversal(t_tree *head)
-// {
-// 	t_dll	*nodes;
-// 	t_dll_node	*current_node;
-//
-// 	nodes = head->childs;
-// 	current_node = nodes->head;
-// 	while (current_node)
-// 	{
-// 		tree_postorder_traversal((t_tree *)current_node->data);
-// 		current_node = current_node->next;
-// 	}
-// 	t_ast	*data = head->item;
-// 	t_dll *dll = data->tokens;
-// 	if (data->delimiter)
-// 		printf("delimter: %s\n", data->delimiter);
-// 	if (data->type == PIPELINE)
-// 		printf("pipline\n");
-// 	if (data->type == SIMPLE_COMMAND)
-// 		printf("SIMPLE_COMMAND\n");
-// 	if (data->type == LIST)
-// 		printf("LIST\n");
-// 	if (data->type == ARGUMENTS)
-// 		printf("ARGUMENTS\n");
-// 	if (data->type == REDIRECTIONS)
-// 		printf("REDIRECTIONS\n");
-// 	print_dll(dll);
-// 	/*printf("%s\n", data->delimiter);*/
-// 	printf("\nnext\n");
-// 	/*printf("%s\n", (char *)dll->head->data);*/
-// }
 
 // int	main(void)
 // {

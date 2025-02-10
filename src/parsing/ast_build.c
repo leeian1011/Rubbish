@@ -6,12 +6,11 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 18:10:59 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/07 17:52:32 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/11 01:22:22 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/parsing.h"
-#include <stdio.h>
 
 t_tree	*init_list(t_dll *expression)
 {
@@ -46,6 +45,7 @@ void	create_pipelines(t_tree *root)
 		tree_make_child(&root, data);
 		temp = temp->next;
 	}
+	dll_clear(child_tokens);
 	free(child_tokens);
 }
 
@@ -74,6 +74,7 @@ void	create_simple_cmds(t_tree *pipeline)
 		tree_make_child(&pipeline, data);
 		temp = temp->next;
 	}
+	dll_clear(child_tokens);
 	free(child_tokens);
 }
 
@@ -117,6 +118,8 @@ int	handle_grouping(t_tree *grouping)
 	}
 	sub_tree = ast_build(split_token);
 	dll_append(grouping->childs, sub_tree);
+	free(temp);
+	free(temp2);
 	return (0);
 }
 
@@ -192,6 +195,5 @@ t_tree	*ast_build(t_dll *expression)
 		}
 		pipelines = pipelines->next;
 	}
-	print_tree(root, 0);
 	return (root);
 }

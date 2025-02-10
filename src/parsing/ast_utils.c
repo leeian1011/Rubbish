@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:49:57 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/25 21:07:14 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/10 20:56:14 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,14 @@ t_dll	*split_dll(t_dll *tokens, int (*cmp)(void *))
 	t_dll	*working_dll;
 	t_dll_node	*current;
 
-	child_tokens = dll_init();
+	child_tokens = NULL;
 	current = tokens->head;
-	dll_append(child_tokens, dll_init());
-	working_dll = child_tokens->head->data;
+	if (current)
+	{
+		child_tokens = dll_init();
+		dll_append(child_tokens, dll_init());
+		working_dll = child_tokens->head->data;
+	}
 	while (current)
 	{
 		if (cmp(current->data))
