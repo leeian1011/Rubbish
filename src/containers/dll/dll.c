@@ -60,7 +60,7 @@ void *dll_prepend(t_dll *dll, void *data)
   return (dll);
 }
 
-void dll_remove(t_dll *dll, t_dll_node *node, void *(f)(void *))
+void dll_remove(t_dll *dll, t_dll_node *node, void (*f)(void *))
 {
   t_dll_node *temp;
 
