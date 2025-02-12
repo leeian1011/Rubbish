@@ -6,13 +6,12 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 21:03:56 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/11 01:20:00 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:04:38 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/containers.h"
 #include "../../../includes/parsing.h"
-#include <stdio.h>
 
 t_tree	*tree_create_node(void *item)
 {
@@ -127,9 +126,19 @@ void	execute_tree_node(t_tree *head)
 
 void	free_tree(t_tree *head)
 {
-	dll_clear(((t_ast *)head->item)->tokens);
-	free(((t_ast *)head->item)->tokens);
-	free(head->item);
+	t_ast	*item;
+	t_dll	*dll;
+
+	item = head->item;
+	dll = item->tokens;
+	if (item->type == LIST)
+	{
+		while (dll->head)
+			dll_remove(dll, dll->head, free_str);
+	}
+	dll_clear(item->tokens);
+	free(item->tokens);
+	free(item);
 	dll_clear(head->childs);
 	free(head->childs);
 	free(head);

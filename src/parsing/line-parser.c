@@ -16,12 +16,11 @@ static bool is_closeable(char c)
   return (c == '"' || c == '\'' || c == '\(');
 }
 
-void	free_str_frfr(void *node)
+void	free_str(void *node)
 {
 	t_dll_node	*n;
 
 	n = (t_dll_node *)node;
-	printf("%s\n", (char *)n->data);
 	free(n->data);
 	n->data = NULL;
 }
@@ -79,7 +78,7 @@ static bool cat_meta(t_dll *dll, t_dll_node *itr, char meta)
   temp = itr->data;
   itr->data = ft_strjoin(temp, itr->next->data);
   free(temp);
-  dll_remove(dll, itr->next, NULL);
+  dll_remove(dll, itr->next, free_str);
   if (ft_strncmp((char *)itr->next->data, &meta, 1) == 0)
     return (false);
   return (true);
@@ -141,7 +140,7 @@ bool sanity_check(t_dll *dll)
   {
     temp = itr->next;
     if (is_whitespace(*(char *)itr->data))
-      dll_remove(dll, itr, free_str_frfr);
+      dll_remove(dll, itr, free_str);
     itr = temp;
   }
   itr = dll->head;

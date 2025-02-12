@@ -2,10 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   rubbish.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */ /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/23 17:02:34 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/10 15:30:00 by jianwong         ###   ########.fr       */
+/*   Created: 2025/02/12 14:27:31 by jianwong          #+#    #+#             */
+/*   Updated: 2025/02/12 14:27:35 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +15,8 @@
 #include "../includes/parsing.h"
 #include "../includes/pipe_operator.h"
 #include "libft/libft.h"
-
-void	free_str(void *node)
-{
-	t_dll_node	*n;
-
-	n = (t_dll_node *)node;
-	printf("%s\n", (char *)n->data);
-	free(n->data);
-	n->data = NULL;
-}
+#include "../includes/readline.h"
+#include <readline/readline.h>
 
 int	main(int argc, char **argv, char **env)
 {
@@ -34,24 +27,25 @@ int	main(int argc, char **argv, char **env)
 	while (true)
 	{
 		dll = dll_init();
-		ft_putstr_fd("rbsh-prototype: ", 0);
-		line = get_next_line(0);
+		line = readline("rbsh: ");
 		if (!line)
 			break ;
+		add_history(line);
 		if (!parse_line(dll, line))
 		{
+			while (dll->head)
+				dll_remove(dll, dll->head, free_str);
 			printf("parsing error\n");
 			continue ;
 		}
 		free(line);
 		root = ast_build(dll);
 		if (!root)
+		{
+			printf("parsing error\n");
 			continue ;
+		}
 		print_tree(root, 0);
-		printf("pre len -> %i\n", dll->len);
-		while (dll->head)
-			dll_remove(dll, dll->head, free_str);
-		printf("post len -> %i\n", dll->len);
 		tree_postorder_traversal(root, free_tree);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 18:10:59 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/11 01:22:22 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:20:20 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,11 @@ int	handle_grouping(t_tree *grouping)
 	split_token = dll_init();
 	if (!parse_line(split_token, temp2))
 	{
-		printf("parsing error\n");
+		while (split_token->head)
+			dll_remove(split_token, split_token->head, free_str);
+		free(split_token);
+		free(temp);
+		free(temp2);
 		return (1);
 	}
 	sub_tree = ast_build(split_token);
