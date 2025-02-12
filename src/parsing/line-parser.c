@@ -16,6 +16,15 @@ static bool is_closeable(char c)
   return (c == '"' || c == '\'' || c == '\(');
 }
 
+void	free_str(void *node)
+{
+	t_dll_node	*n;
+
+	n = (t_dll_node *)node;
+	free(n->data);
+	n->data = NULL;
+}
+
 // This function iterates the line byte by byte until it encounters either a 
 // whitespace, closeable meta ('(', '\'', '\"') or a functional meta ('>', '<', '|')
 static char *extract_token(char **line)
@@ -47,6 +56,8 @@ static char *extract_token(char **line)
           count--;
         itr++;
       }
+			itr--;
+			break;
     }
     else
       break ;
@@ -67,7 +78,7 @@ static bool cat_meta(t_dll *dll, t_dll_node *itr, char meta)
   temp = itr->data;
   itr->data = ft_strjoin(temp, itr->next->data);
   free(temp);
-  dll_remove(dll, itr->next, NULL);
+  dll_remove(dll, itr->next, free_str);
   if (ft_strncmp((char *)itr->next->data, &meta, 1) == 0)
     return (false);
   return (true);
@@ -129,7 +140,7 @@ bool sanity_check(t_dll *dll)
   {
     temp = itr->next;
     if (is_whitespace(*(char *)itr->data))
-      dll_remove(dll, itr, NULL);
+      dll_remove(dll, itr, free_str);
     itr = temp;
   }
   itr = dll->head;
@@ -154,7 +165,10 @@ bool parse_line(t_dll *dll, char *line)
     if (!token)
       return (false);
     if (!*token)
+		{
+			free(token);
       break ;
+		}
     dll_append(dll, token);
   }
   if (!token_analysis(dll))

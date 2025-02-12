@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 13:22:46 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/25 20:57:49 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:04:18 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_ast
 }	t_ast;
 
 bool parse_line(t_dll *dll, char *line);
+void	free_str(void *node);
 
 t_tree	*ast_build(t_dll *expression);
 

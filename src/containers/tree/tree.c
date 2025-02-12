@@ -6,13 +6,12 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 21:03:56 by jianwong          #+#    #+#             */
-/*   Updated: 2025/01/26 00:33:04 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:04:38 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/containers.h"
 #include "../../../includes/parsing.h"
-#include <stdio.h>
 
 t_tree	*tree_create_node(void *item)
 {
@@ -20,7 +19,7 @@ t_tree	*tree_create_node(void *item)
 
 	new_node = malloc(sizeof(t_tree));
 	if (!new_node)
-		return (NULL);
+		return (NULL); 
 	new_node->childs = dll_init();
 	new_node->item = item;
 	return (new_node);
@@ -35,7 +34,7 @@ void	tree_make_child(t_tree **head, void *item)
 		tree_create_node(item);
 		return ;
 	}
-	dll_append((*head)->childs, tree_create_node(item));
+	dll_append((*head)->childs, tree_create_node(item)); 
 }
 
 void	tree_make_child_reversed(t_tree **head, void *item)
@@ -50,12 +49,6 @@ void	tree_make_child_reversed(t_tree **head, void *item)
 	dll_prepend((*head)->childs, tree_create_node(item));
 }
 
-void print_leave(t_tree *node, int depth)
-{
-
-
-}
-
 void print_syntax(t_ast *syntax, int depth)
 {
   int i = 0;
@@ -68,8 +61,7 @@ void print_syntax(t_ast *syntax, int depth)
   printf("delimeter => %s\n", syntax->delimiter);
   while (i < depth * 4)
   {
-    printf(" ");
-    i++;
+    printf(" "); i++;
   }
 	if (syntax->type == PIPELINE)
 		printf("pipline\n");
@@ -93,6 +85,22 @@ void print_syntax(t_ast *syntax, int depth)
       itr = itr->next;
     }
   }
+	if (syntax->type == GROUPING)
+  {
+    t_dll_node *itr = syntax->tokens->head;
+		printf("GROUPING\n");
+    while (itr)
+    {
+      i = 0;
+      while (i < depth * 4)
+      {
+        printf(" ");
+        i++;
+      }
+      printf("grouping token: %s\n", (char *)itr->data);
+      itr = itr->next;
+    }
+  }
 	if (syntax->type == REDIRECTIONS)
   {
     t_dll_node *itr = syntax->tokens->head;
@@ -108,8 +116,32 @@ void print_syntax(t_ast *syntax, int depth)
       printf("redirect token: %s\n", (char *)itr->data);
       itr = itr->next;
     }
-
   }
+}
+
+void	execute_tree_node(t_tree *head)
+{
+	// DO SOMETHING
+}
+
+void	free_tree(t_tree *head)
+{
+	t_ast	*item;
+	t_dll	*dll;
+
+	item = head->item;
+	dll = item->tokens;
+	if (item->type == LIST)
+	{
+		while (dll->head)
+			dll_remove(dll, dll->head, free_str);
+	}
+	dll_clear(item->tokens);
+	free(item->tokens);
+	free(item);
+	dll_clear(head->childs);
+	free(head->childs);
+	free(head);
 }
 
 void print_tree(t_tree *tree, int depth)
@@ -126,6 +158,35 @@ void print_tree(t_tree *tree, int depth)
   }
 }
 
+void	tree_postorder_traversal(t_tree *head, void (*exec)(t_tree *))
+{
+	t_dll	*nodes;
+	t_dll_node	*current_node;
+
+	nodes = head->childs;
+	current_node = nodes->head;
+	while (current_node)
+	{
+		tree_postorder_traversal((t_tree *)current_node->data, exec);
+		current_node = current_node->next;
+	}
+	exec(head);
+}
+
+void	tree_preorder_traversal(t_tree *head, void (*exec)(t_tree *))
+{
+	t_dll	*nodes;
+	t_dll_node	*current_node;
+
+	nodes = head->childs;
+	current_node = nodes->head;
+	exec(head);
+	while (current_node)
+	{
+		tree_postorder_traversal((t_tree *)current_node->data, exec);
+		current_node = current_node->next;
+	}
+}
 
 // int	main(void)
 // {

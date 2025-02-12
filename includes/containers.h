@@ -12,8 +12,7 @@ typedef struct s_dll_node {
 
 typedef struct s_dll 
 {
-  t_dll_node *head;
-  t_dll_node *tail;
+  t_dll_node *head; t_dll_node *tail;
   unsigned int len;
 } t_dll;
 
@@ -47,7 +46,7 @@ void free_node(t_dll_node *node);
 t_dll *dll_init();
 void *dll_append(t_dll *dll, void *data);
 void *dll_prepend(t_dll *dll, void *data);
-void dll_remove(t_dll *dll, t_dll_node *node, void *(f)(void *));
+void dll_remove(t_dll *dll, t_dll_node *node, void (*f)(void *));
 void dll_clear(t_dll* dll);
 t_dll_node	*dll_find(t_dll *dll, void *target, int (*cmp)(void *, void *));
 
@@ -65,7 +64,9 @@ int		hash_count(t_hashmap *hashmap);
 t_tree	*tree_create_node(void *item);
 void	tree_make_child(t_tree **root, void *item);
 void	tree_make_child_reversed(t_tree **head, void *item);
-void	tree_postorder_traversal(t_tree *head);
+void	tree_postorder_traversal(t_tree *head, void (*exec)(t_tree *));
 void	execute_tree_node(t_tree *head);
+void	print_tree(t_tree *tree, int depth);
+void	free_tree(t_tree *head);
 
 #endif

@@ -1,8 +1,8 @@
 #include "../../../includes/containers.h"
 
 t_dll *dll_init()
-{
-  t_dll *dll;
+{ 
+	t_dll *dll;
 
   dll = malloc(sizeof(t_dll));
   if (!dll)
@@ -60,9 +60,10 @@ void *dll_prepend(t_dll *dll, void *data)
   return (dll);
 }
 
-void dll_remove(t_dll *dll, t_dll_node *node, void *(f)(void *))
+void dll_remove(t_dll *dll, t_dll_node *node, void (*f)(void *))
 {
   t_dll_node *temp;
+	temp = node;
 
   if (dll->head == node)
   {
@@ -70,6 +71,9 @@ void dll_remove(t_dll *dll, t_dll_node *node, void *(f)(void *))
     {
       node->next->prev = NULL;
       dll->head = node->next;
+			if (f != NULL)
+				f(node);
+			free(node);
     }
     else
     {
@@ -86,6 +90,9 @@ void dll_remove(t_dll *dll, t_dll_node *node, void *(f)(void *))
     {
       node->prev->next = NULL;
       dll->tail = node->next;
+			if (f != NULL)
+				f(node);
+			free(node);
     }
     else
     {
@@ -98,12 +105,11 @@ void dll_remove(t_dll *dll, t_dll_node *node, void *(f)(void *))
   }
   else
   {
-    temp = node;
     node->prev->next = node->next;
     node->next->prev = node->prev;
     if (f != NULL)
       f(node);
-    free(temp);
+    free(node);
   }
   dll->len -= 1;
 }
