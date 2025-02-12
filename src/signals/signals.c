@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:02:04 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/06 13:43:25 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/12 21:23:14 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	set_sigaction(void *sa, void (*handler)(int, siginfo_t *, void *))
 	sigact = (struct sigaction *) sa;
 	sigact->sa_sigaction = handler;
 	sigaction(SIGINT, sigact, NULL);
-	sigaction(SIGQUIT, sigact, NULL);
+	signal(SIGQUIT, SIG_IGN); 
 }
 
 void	ignore_signal(int sig_no, siginfo_t *info, void *context)
@@ -35,9 +35,7 @@ void	set_ignore(void *sa)
 void	signal_handler(int sig_no, siginfo_t *info, void *context)
 {
 	if (sig_no == SIGINT)
-		printf("\n");
-	else if (sig_no == SIGQUIT)
-		exit(0);
+		printf("\nrbsh: ");
 }
 
 void	set_default(void *sa)

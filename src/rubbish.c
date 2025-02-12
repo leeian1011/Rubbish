@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 14:27:31 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/12 14:27:35 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:59:48 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,19 @@
 #include "libft/libft.h"
 #include "../includes/readline.h"
 #include <readline/readline.h>
+#include "../includes/signals.h"
 
 int	main(int argc, char **argv, char **env)
 {
 	t_tree	*root;
 	char	*line;
 	t_dll	*dll;
+	struct sigaction	sa;
 
+	init_signals(&sa);
 	while (true)
 	{
+		set_default(&sa);
 		dll = dll_init();
 		line = readline("rbsh: ");
 		if (!line)
