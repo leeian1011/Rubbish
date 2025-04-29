@@ -10,46 +10,55 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/containers.h"
-#include "../includes/buildins.h"
-#include "../includes/parsing.h"
-#include "../includes/pipe_operator.h"
-#include "libft/libft.h"
-#include "../includes/readline.h"
-#include <readline/readline.h>
-#include "../includes/signals.h"
+#include "../includes/rubbish.h"
+
+int g_ecode;
+
+static int	validate_env(char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i] != NULL)
+		i++;
+	if (i == 0)
+		return (0);
+	else
+		return (1);
+}
+
+//Function to free all the content in INFO
+void	free_info(t_info *info)
+{
+	if (info->envcp)
+		ft_free_split(info->envcp);
+	free (info);
+}
 
 int	main(int argc, char **argv, char **env)
 {
-	t_tree	*root;
-	char	*line;
-	t_dll	*dll;
-	struct sigaction	sa;
+	t_info	*info;
 
-	init_signals(&sa);
-	while (true)
-	{
-		set_default(&sa);
-		dll = dll_init();
-		line = readline("rbsh: ");
-		if (!line)
-			break ;
-		add_history(line);
-		if (!parse_line(dll, line))
-		{
-			while (dll->head)
-				dll_remove(dll, dll->head, free_str);
-			printf("parsing error\n");
-			continue ;
-		}
-		free(line);
-		root = ast_build(dll);
-		if (!root)
-		{
-			printf("parsing error\n");
-			continue ;
-		}
-		print_tree(root, 0);
-		tree_postorder_traversal(root, free_tree);
-	}
+	(void)argv;
+	g_ecode = 0;
+	if (!validate_env(env))
+		return (ft_printf("Invalid env\n"), -1);
+	if (argc != 1)
+		return (ft_printf("Invalid arguments\n"), -2);
+	info = malloc(sizeof(t_info));
+	if (!info)
+		return (error(MEM, NULL, 2), 2);
+	info->envcp = clone_env(env);
+	info->envcp = del_var(info->envcp, "_");
+	info->envcp = add_var(info->envcp, "_=/usr/bin/env");
+	info->envcp = del_var(info->envcp, "OLDPWD");
+	info->homepath = getenv("HOME");
+	if (!info->homepath)
+  {
+    ft_printf("Invalid Home\n");
+		return (-1);
+  }
+	prompt_loop(info);
+  free_info(info);
+	return (g_ecode);
 }

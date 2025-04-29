@@ -1,44 +1,37 @@
-NAME = minishell
-DIR_LIBFT=src/libft
-LIBFT=$(DIR_LIBFT)/libft.a
-OBJ = $(SOURCE:.c=.o)
-FLAGS = -Wall -Wextra -Werror
-CC = cc
+NAME = rbsh
+SRCS = ./src/parsing/line_splitter/split.c ./src/parsing/line_splitter/split_utils.c ./src/prompt/util/normalize_meta.c \
+		./src/prompt/util/unquote.c ./src/prompt/util/validate_redir.c ./src/prompt/util/expand_env_var.c \
+		./src/prompt/util/expand_env_var_utils.c ./src/prompt/util/normalize_line.c ./src/parsing/parse_cmd.c ./src/execution/execute.c \
+		./src/execution/heredoc.c ./src/execution/getpaths.c ./src/execution/child_execution.c \
+		./src/parsing/parse_cmd_loop.c ./src/parsing/redir_util.c ./src/parsing/wildcard.c ./src/parsing/wildcard_utils.c \
+		./src/prompt/prompt_loop.c ./src/prompt/prompt_utils.c ./src/rubbish.c ./src/signal_handlers.c ./src/error.c \
+		./src/env_utils.c ./src/builtins/export.c ./src/builtins/unset.c ./src/execution/builtin.c ./src/builtins/exit.c \
+		./src/builtins/cd.c ./src/builtins/pwd.c ./src/builtins/echo.c ./src/builtins/env.c
+
+OBJ = $(SRCS:.c=.o)
+FLAGS = -Wall -Wextra -Werror -g
 
 all: $(NAME)
 
-rubbish:
-	$(CC) $(SOURCE) -o rbsh
+$(NAME): $(OBJ) libft 
+	cc $(FLAGS) $(OBJ) libft.a -lreadline -o $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT)
-	$(CC) $^ -I$(DIR_LIBFT) -o $(NAME)
+libft:
+	$(MAKE) -C ./libft all
+	cp ./libft/libft.a ./libft.a 
 
-%.o:%.c
-	$(CC) $(FLAGS) -I$(DIR_LIBFT) -c $< -o $@
-
-$(LIBFT):
-	make -C $(DIR_LIBFT) bonus
-
-test_lp:
-	$(CC) src/containers/dll/dll.c src/containers/dll/dll_node.c src/parsing/line-parser.c \
-		src/containers/tree/tree.c src/parsing/ast_build.c src/parsing/ast_utils.c src/rubbish.c \
-		src/parsing/ast_cmp.c src/signals/signals.c -lreadline $(LIBFT)
-
-test_dll:
-	$(CC) $(FLAGS) src/containers/dll/dll_test.c src/containers/dll/dll.c src/containers/dll/dll_node.c
-
-test_env:
-	$(CC) src/containers/dll/dll_node.c src/containers/dll/dll.c src/containers/hashmap/hashmap.c \
-	src/containers/hashmap/hashmap_utils.c src/buildins/export.c $(LIBFT)
+%.o: %.c
+	cc -c $(FLAGS) $^ -o $@
 
 clean:
-	rm -f src/*.o
-	make -C $(DIR_LIBFT) clean
+	@$(MAKE) -C ./libft clean
+	rm -rf $(OBJ) $(OBJBONUS)
 
 fclean: clean
-	rm -f $(NAME)
-	make -C $(DIR_LIBFT) fclean
+	@$(MAKE) -C ./libft fclean
+	rm -rf $(NAME) $(LIBNAME)
+	rm -rf ./libft.a
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re libft
