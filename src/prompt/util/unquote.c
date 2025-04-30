@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unquote.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 16:28:14 by jianwong          #+#    #+#             */
+/*   Updated: 2025/04/30 16:28:42 by jianwong         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../includes/rubbish.h"
 
 //Function to calc the new length of the string once quote-cleaned
-static int extracted_len(char *str, char *quote)
+static int	extracted_len(char *str, char *quote)
 {
 	int		j;
 	int		cut;

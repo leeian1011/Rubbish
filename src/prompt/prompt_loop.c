@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prompt_loop.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 16:33:32 by jianwong          #+#    #+#             */
+/*   Updated: 2025/04/30 16:43:46 by jianwong         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/rubbish.h"
 
 static void	free_nodes(t_cmd *nodes)
@@ -43,7 +55,6 @@ static int	handle_processing(char *str, t_info *info, char ***res)
 	return (0);
 }
 
-
 static int	process_lines(char *str, t_info *info)
 {
 	char	**res;
@@ -72,41 +83,21 @@ static char	*get_prompt(char **env)
 	char	*user;
 	char	*prompt;
 
-  user = NULL;
-  while (*env)
-  {
-    if (ft_strnstr(*env, "USER=", 5))
-    {
-      user = strdup(*env + 5);
-      break ;
-    }
-    env++;
-  }
+	user = NULL;
+	while (*env)
+	{
+		if (ft_strnstr(*env, "USER=", 5))
+		{
+			user = strdup(*env + 5);
+			break ;
+		}
+		env++;
+	}
 	if (!user)
-		return ft_strdup("rbsh: ");
+		return (ft_strdup("rbsh: "));
 	prompt = ft_strjoin(user, "-rbsh: ");
-  free(user);
+	free(user);
 	return (prompt);
-}
-
-static void	ft_set_sig(void)
-{
-	struct sigaction	sa;
-
-  ft_memset(&sa, 0, sizeof(sa));
-	sa.sa_handler = &sig_ctrlc_handler;
-	sigaction(SIGINT, &sa, NULL);
-	sa.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &sa, NULL);
-  sigemptyset(&sa.sa_mask);
-}
-
-static void line_options(char *input)
-{
-	if (input)
-		add_history(input);
-	if (!ft_strcmp("clear", input))
-		ft_printf("\033[H\033[2J");
 }
 
 void	prompt_loop(t_info *info)
@@ -115,7 +106,7 @@ void	prompt_loop(t_info *info)
 	char				*prompt;
 
 	prompt = get_prompt(info->envcp);
-  rl_catch_signals = 0;
+	rl_catch_signals = 0;
 	while (1)
 	{
 		ft_set_sig();
@@ -135,4 +126,3 @@ void	prompt_loop(t_info *info)
 	}
 	free(prompt);
 }
-

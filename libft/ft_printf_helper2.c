@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:01:12 by jianwong          #+#    #+#             */
-/*   Updated: 2024/11/26 13:06:04 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:11:09 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*init_buffer(char	*flags, int size, char convert)
 	if (!buffer)
 		return (NULL);
 	if (ft_strchr(flags, '0') && ft_strchr("iduxX", convert) \
-		&& !ft_strchr(flags, '.'))
+&& !ft_strchr(flags, '.'))
 		ft_memset(buffer, '0', size);
 	else
 		ft_memset(buffer, ' ', size);

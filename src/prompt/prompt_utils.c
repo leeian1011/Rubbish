@@ -1,21 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prompt_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 16:37:00 by jianwong          #+#    #+#             */
+/*   Updated: 2025/04/30 16:51:51 by jianwong         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/rubbish.h"
-
-void	open_outfiles(t_cmd *cmds)
-{
-	int	i;
-	int	fd;
-
-	i = 0;
-	while (i < cmds->info->cmd_amount)
-	{
-		if (cmds[i].outfile)
-		{
-			fd = open(cmds[i].outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-			close(fd);
-		}
-		i++;
-	}
-}
 
 //Function to advance i to the next possibly eectuable command
 static void	advance_unused(t_cmd *cmds, int *i)
@@ -39,30 +34,6 @@ static void	advance_unused(t_cmd *cmds, int *i)
 	}
 	else if (*i < cmds->info->cmd_amount)
 		*i += cmds[*i].cmd_real_num;
-}
-
-int advance_to_last_r_par(t_cmd *cmds, int *idx)
-{
-  int count;
-  int	r_count;
-
-  count = 1;
-  r_count = 0;
-  while (*idx < cmds->info->cmd_amount)
-  {
-    if (cmds[*idx].type == L_PAR)
-      count++;
-    else if (cmds[*idx].type == R_PAR)
-    {
-      r_count++;
-      if (r_count == count)
-        break;
-    }
-    (*idx)++;
-  }
-	if (*idx < cmds->info->cmd_amount)
-    (*idx)++;
-  return (count);
 }
 
 //Check inapropriate node, returns 0 if OK
@@ -108,11 +79,26 @@ static int	ft_check_nodes(t_cmd *cmds)
 	return (0);
 }
 
+static void	loop_and_execute_part_2(t_cmd *cmds, int *i, t_type *tp)
+{
+	if ((*tp == T_AND && g_ecode == 0) || (*tp == T_OR && g_ecode != 0))
+		return ;
+	else if ((*tp == T_AND && g_ecode != 0) || (*tp == T_OR && g_ecode == 0)
+		|| ft_check_nodes(&cmds[*i]))
+	{
+		advance_unused(cmds, i);
+		return ;
+	}
+	execute(&cmds[*i]);
+	*i += cmds[*i].cmd_real_num;
+}
+
 //Function to execute cmd repeatedly deppending on
 //commands &&, || and ()
 void	loop_and_execute(t_cmd *cmds, int *i)
 {
 	t_type	tp;
+	int		pi;
 
 	while (*i < cmds->info->cmd_amount)
 	{
@@ -121,28 +107,18 @@ void	loop_and_execute(t_cmd *cmds, int *i)
 			(*i)++;
 		if (tp == L_PAR)
 		{
-      int pi = fork();
-      if (pi == 0)
-      {
-			  loop_and_execute(cmds, i);
-        exit(g_ecode);
-      }
-      waitpid(pi, &g_ecode, 0);
-      advance_to_last_r_par(cmds, i);
-      continue ;
+			pi = fork();
+			if (pi == 0)
+			{
+				loop_and_execute(cmds, i);
+				exit(g_ecode);
+			}
+			waitpid(pi, &g_ecode, 0);
+			advance_to_last_r_par(cmds, i);
+			continue ;
 		}
-		else if (tp == R_PAR)
+		if (tp == R_PAR)
 			return ;
-		else if ((tp == T_AND && g_ecode == 0) || (tp == T_OR && g_ecode != 0))
-			continue ;
-		else if ((tp == T_AND && g_ecode != 0) || (tp == T_OR && g_ecode == 0)
-			|| ft_check_nodes(&cmds[*i]))
-		{
-			advance_unused(cmds, i);
-			continue ;
-		}
-		execute(&cmds[*i]);
-		*i += cmds[*i].cmd_real_num;
+		loop_and_execute_part_2(cmds, i, &tp);
 	}
 }
-

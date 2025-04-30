@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_env_var.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 16:30:06 by jianwong          #+#    #+#             */
+/*   Updated: 2025/04/30 16:32:14 by jianwong         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../includes/rubbish.h"
 
 char	*ft_fill_expand(char *env, char *str, int index, int quote)
@@ -89,11 +101,11 @@ static int	ft_check_var_aux(char **env, char **str, int *i, int *quote)
 	{
 		*str = ft_expand_var(env, *str, *i, (*quote) % 2);
 		if (!*str)
-    {
-      ft_free_split((str + 1));
-      error(MEM, NULL, 2);
-			return(0);
-    }
+		{
+			ft_free_split((str + 1));
+			error(MEM, NULL, 2);
+			return (0);
+		}
 		*i = -1;
 	}
 	else if ((*str)[*i] == '"' && (*quote))

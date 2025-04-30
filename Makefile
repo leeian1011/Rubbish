@@ -4,7 +4,8 @@ SRCS = ./src/parsing/line_splitter/split.c ./src/parsing/line_splitter/split_uti
 		./src/prompt/util/expand_env_var_utils.c ./src/prompt/util/normalize_line.c ./src/parsing/parse_cmd.c ./src/execution/execute.c \
 		./src/execution/heredoc.c ./src/execution/getpaths.c ./src/execution/child_execution.c \
 		./src/parsing/parse_cmd_loop.c ./src/parsing/redir_util.c ./src/parsing/wildcard.c ./src/parsing/wildcard_utils.c \
-		./src/prompt/prompt_loop.c ./src/prompt/prompt_utils.c ./src/rubbish.c ./src/signal_handlers.c ./src/error.c \
+		./src/prompt/prompt_loop.c ./src/prompt/prompt_utils.c ./src/prompt/prompt_loop_2.c ./src/prompt/prompt_utils_2.c \
+		./src/rubbish.c ./src/signal_handlers.c ./src/error.c \
 		./src/env_utils.c ./src/builtins/export.c ./src/builtins/unset.c ./src/execution/builtin.c ./src/builtins/exit.c \
 		./src/builtins/cd.c ./src/builtins/pwd.c ./src/builtins/echo.c ./src/builtins/env.c
 
