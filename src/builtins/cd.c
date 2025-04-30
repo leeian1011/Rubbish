@@ -6,26 +6,11 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 01:09:36 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/06 14:58:30 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:42:56 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/rubbish.h"
-
-static int	is_dir(const char *name)
-{
-	DIR	*dir;
-
-	dir = opendir(name);
-	if (dir)
-	{
-		closedir(dir);
-		return (0);
-	}
-	if (errno == ENOTDIR)
-		return (1);
-	return (-1);
-}
 
 static char	**cd_update_env(char **env, char *path)
 {
@@ -54,7 +39,7 @@ void	cd_home(t_cmd *cmd, char ***envcpy)
 	char	*path;
 	int		found;
 
-  (void)envcpy;
+	(void)envcpy;
 	found = found_in_env("HOME=", cmd->info->envcp, &path);
 	if (found && is_dir(path) == -1)
 		error(NDIR, path, 1);
@@ -70,7 +55,7 @@ static void	cd_oldpwd(t_cmd *cmd, char ***envcpy)
 {
 	char	*path;
 
-  (void)envcpy;
+	(void)envcpy;
 	if (found_in_env("OLDPWD=", cmd->info->envcp, &path) == 1)
 	{
 		cmd->info->envcp = cd_update_env(cmd->info->envcp, path);
@@ -86,7 +71,7 @@ static void	cd_tilde(t_cmd *cmd, char ***envcpy)
 	int		found;
 	char	*path;
 
-  (void)envcpy;
+	(void)envcpy;
 	found = found_in_env("HOME=", cmd->info->envcp, &path);
 	if (found && !is_dir(path))
 		cmd->info->envcp = cd_update_env(cmd->info->envcp, path);
@@ -97,7 +82,6 @@ static void	cd_tilde(t_cmd *cmd, char ***envcpy)
 	if (found)
 		free(path);
 }
-
 
 int	cd(t_cmd *cmd)
 {
@@ -113,7 +97,8 @@ int	cd(t_cmd *cmd)
 	else
 	{
 		if (access(cmd->full_cmd[1], F_OK) == 0 && !is_dir(cmd->full_cmd[1]))
-			cmd->info->envcp = cd_update_env(cmd->info->envcp, cmd->full_cmd[1]);
+			cmd->info->envcp = \
+cd_update_env(cmd->info->envcp, cmd->full_cmd[1]);
 		else if (is_dir(cmd->full_cmd[1]) == 1)
 			error(NOT_DIR, cmd->full_cmd[1], 1);
 		else

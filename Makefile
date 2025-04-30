@@ -7,7 +7,7 @@ SRCS = ./src/parsing/line_splitter/split.c ./src/parsing/line_splitter/split_uti
 		./src/prompt/prompt_loop.c ./src/prompt/prompt_utils.c ./src/prompt/prompt_loop_2.c ./src/prompt/prompt_utils_2.c \
 		./src/rubbish.c ./src/signal_handlers.c ./src/error.c \
 		./src/env_utils.c ./src/builtins/export.c ./src/builtins/unset.c ./src/execution/builtin.c ./src/builtins/exit.c \
-		./src/builtins/cd.c ./src/builtins/pwd.c ./src/builtins/echo.c ./src/builtins/env.c
+		./src/builtins/cd.c ./src/builtins/cd_helper.c ./src/builtins/pwd.c ./src/builtins/echo.c ./src/builtins/env.c
 
 OBJ = $(SRCS:.c=.o)
 FLAGS = -Wall -Wextra -Werror -g

@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 16:12:15 by jianwong          #+#    #+#             */
-/*   Updated: 2025/04/30 16:45:08 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:42:46 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ int		found_in_env(char *var, char **env, char **path);
 
 // Builtin
 int		cd(t_cmd *cmds);
+int		is_dir(const char *name);
 int		pwd(void);
 int		echo(t_cmd *cmds);
 int		env(char **env);

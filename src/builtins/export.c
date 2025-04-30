@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:13:25 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/06 14:03:06 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:05:21 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,10 @@ int	rbsh_export(t_cmd *cmd)
 
 	g_ecode = 0;
 	if (!cmd->full_cmd[1])
-  {
-    export_declare(cmd->info->envcp);
-    return (0);
-  }
+	{
+		export_declare(cmd->info->envcp);
+		return (0);
+	}
 	cmd->info->envcp = handle_export(cmd->info->envcp, cmd->full_cmd);
 	i = 1;
 	while (cmd->full_cmd[i])

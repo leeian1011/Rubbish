@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 18:56:26 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/04 00:10:00 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:03:51 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	rbsh_exit(t_cmd *cmd)
 	if (atoi_exit(cmd->full_cmd[1], &nbr) < 0)
 	{
 		ft_printf("rbsh: exit: %s: numeric argument required\n", \
-			cmd->full_cmd[1]);
+cmd->full_cmd[1]);
 		g_ecode = 255;
 	}
 	else if (cmd->full_cmd[2])

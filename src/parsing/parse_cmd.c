@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_cmd.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 16:58:24 by jianwong          #+#    #+#             */
+/*   Updated: 2025/04/30 17:00:49 by jianwong         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/rubbish.h"
 
 static t_cmd	*ft_init_cmds(t_info *info)
@@ -98,10 +110,10 @@ t_cmd	*parse_cmd(char **str, t_info *info)
 	info->fd = NULL;
 	cmds = ft_init_cmds(info);
 	if (!cmds)
-  {
-    free_info(info);
+	{
+		free_info(info);
 		return (NULL);
-  }
+	}
 	while (i < info->cmd_amount)
 	{
 		str = parse_cmd_loop(&cmds[i], str, info->envcp);
