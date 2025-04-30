@@ -6,7 +6,7 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 16:12:15 by jianwong          #+#    #+#             */
-/*   Updated: 2025/04/30 17:42:46 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/04/30 21:33:17 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ void	*builtin_error(t_ecode err_type, char *param, int err);
 
 // Execution
 void	execute(t_cmd *cmds);
+void	fork_execution(t_cmd *cmd, int i, pid_t pid);
+int		execution_loop(t_cmd *cmd);
 void	child_execution(t_cmd *cmds, int n);
 char	*gcop(char **env, char *str);
 void	pipe_fd_close(t_cmd *cmds, int j);

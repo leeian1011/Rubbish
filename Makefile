@@ -1,7 +1,7 @@
 NAME = rbsh
 SRCS = ./src/parsing/line_splitter/split.c ./src/parsing/line_splitter/split_utils.c ./src/prompt/util/normalize_meta.c \
 		./src/prompt/util/unquote.c ./src/prompt/util/validate_redir.c ./src/prompt/util/expand_env_var.c \
-		./src/prompt/util/expand_env_var_utils.c ./src/prompt/util/normalize_line.c ./src/parsing/parse_cmd.c ./src/execution/execute.c \
+		./src/prompt/util/expand_env_var_utils.c ./src/prompt/util/normalize_line.c ./src/parsing/parse_cmd.c ./src/execution/execute.c ./src/execution/execute_helper.c\
 		./src/execution/heredoc.c ./src/execution/getpaths.c ./src/execution/child_execution.c \
 		./src/parsing/parse_cmd_loop.c ./src/parsing/redir_util.c ./src/parsing/wildcard.c ./src/parsing/wildcard_utils.c \
 		./src/prompt/prompt_loop.c ./src/prompt/prompt_utils.c ./src/prompt/prompt_loop_2.c ./src/prompt/prompt_utils_2.c \

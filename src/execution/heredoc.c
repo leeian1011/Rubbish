@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 18:02:57 by jianwong          #+#    #+#             */
+/*   Updated: 2025/04/30 18:03:04 by jianwong         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/rubbish.h"
 
 static void	handle_buffer(char c, char **str)
@@ -61,4 +73,3 @@ void	write_heredoc_tmp(t_cmd *cmd)
 	free(line);
 	close(fd);
 }
-

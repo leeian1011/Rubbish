@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   child_execution.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 21:48:45 by jianwong          #+#    #+#             */
+/*   Updated: 2025/04/30 21:49:21 by jianwong         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/rubbish.h"
 
 static void	handle_pipes(t_cmd *cmd, int n)
@@ -89,7 +101,7 @@ void	child_execution(t_cmd *cmd, int n)
 {
 	struct sigaction	sa;
 
-  (void)n;
+	(void)n;
 	sa.sa_handler = SIG_DFL;
 	sigaction(SIGINT, &sa, NULL);
 	if (cmd->cmd_num > 1)
@@ -101,11 +113,11 @@ void	child_execution(t_cmd *cmd, int n)
 	pipe_fd_close(cmd, cmd->cmd_real_num - 1);
 	sa.sa_handler = SIG_DFL;
 	sigaction(SIGQUIT, &sa, NULL);
-  sigemptyset(&sa.sa_mask);
-  if (cmd->type == BUILTIN)
-  {
-    execute_builtin(cmd);
-    exit(g_ecode);
-  }
+	sigemptyset(&sa.sa_mask);
+	if (cmd->type == BUILTIN)
+	{
+		execute_builtin(cmd);
+		exit(g_ecode);
+	}
 	execve(cmd->path, cmd->full_cmd, NULL);
 }

@@ -6,11 +6,12 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:13:25 by jianwong          #+#    #+#             */
-/*   Updated: 2025/04/30 17:05:21 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/04/30 18:27:44 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/rubbish.h"
+#include <unistd.h>
 
 int	find_equal(char *var, int *found)
 {
@@ -41,15 +42,15 @@ static void	export_declare(char **env)
 		else
 		{
 			j = 0;
-			ft_putstr_fd("declare -x ", 1);
+			ft_putstr_fd("declare -x ", STDOUT_FILENO);
 			while (env[i][j])
 			{
-				write(1, &env[i][j], 1);
+				write(1, &env[i][j], STDOUT_FILENO);
 				if (j == find_equal(env[i], &first_eq))
-					write(1, "\"", 1);
+					write(1, "\"", STDOUT_FILENO);
 				j++;
 			}
-			ft_putendl_fd("\"", 1);
+			ft_putendl_fd("\"", STDOUT_FILENO);
 			i++;
 		}
 	}

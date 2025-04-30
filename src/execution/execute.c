@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 21:23:47 by jianwong          #+#    #+#             */
+/*   Updated: 2025/04/30 21:44:02 by jianwong         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/rubbish.h"
 
-static void	fork_execution(t_cmd *cmd, int i, pid_t pid)
+void	fork_execution(t_cmd *cmd, int i, pid_t pid)
 {
 	struct sigaction	sa;
 
@@ -19,45 +31,7 @@ static void	fork_execution(t_cmd *cmd, int i, pid_t pid)
 		g_ecode = WEXITSTATUS(g_ecode);
 	sa.sa_handler = &sig_forked_handler;
 	sigaction(SIGQUIT, &sa, NULL);
-  sigemptyset(&sa.sa_mask);
-}
-
-static int	execution_loop(t_cmd *cmd)
-{
-	pid_t				pid;
-	int					i;
-	struct sigaction	sa;
-
-	i = 0;
-	while (i < cmd->cmd_real_num)
-	{
-		if (cmd[i].in_flag == 2)
-		{
-			sa.sa_handler = SIG_IGN;
-			sigaction(SIGQUIT, &sa, NULL);
-      sigemptyset(&sa.sa_mask);
-		}
-    if (cmd[i].type == BUILTIN && (!ft_strncmp(cmd[i].full_cmd[0], "export", 7)
-      || !ft_strncmp(cmd[i].full_cmd[0], "exit", 5)
-      || !ft_strncmp(cmd[i].full_cmd[0], "unset", 6)
-      || !ft_strncmp(cmd[i].full_cmd[0], "cd", 3))) {
-      if (execute_builtin(&cmd[i]))
-        exit(g_ecode);
-      i++;
-      continue;
-    }
-		if (cmd[i].type != T_PIPE)
-		{
-			pid = fork();
-			if (pid < 0)
-				return (error(FORKERR, NULL, 4), 1);
-			fork_execution(cmd, i, pid);
-		}
-		else if (cmd[i].type != T_PIPE)
-			pipe_fd_close(cmd, i);
-		i++;
-	}
-	return (0);
+	sigemptyset(&sa.sa_mask);
 }
 
 static void	pipe_init(t_cmd *cmd)
@@ -93,7 +67,7 @@ void	execute(t_cmd *cmd)
 	sa.sa_handler = &sig_forked_handler;
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
-  sigemptyset(&sa.sa_mask);
+	sigemptyset(&sa.sa_mask);
 	pipe_init(cmd);
 	if (!cmd->info->fd)
 		return ;
