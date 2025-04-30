@@ -6,13 +6,13 @@
 /*   By: jianwong <jianwong@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 14:27:31 by jianwong          #+#    #+#             */
-/*   Updated: 2025/02/12 14:59:48 by jianwong         ###   ########.fr       */
+/*   Updated: 2025/04/30 21:53:45 by jianwong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rubbish.h"
 
-int g_ecode;
+int	g_ecode;
 
 static int	validate_env(char **env)
 {
@@ -54,11 +54,11 @@ int	main(int argc, char **argv, char **env)
 	info->envcp = del_var(info->envcp, "OLDPWD");
 	info->homepath = getenv("HOME");
 	if (!info->homepath)
-  {
-    ft_printf("Invalid Home\n");
+	{
+		ft_printf("Invalid Home\n");
 		return (-1);
-  }
+	}
 	prompt_loop(info);
-  free_info(info);
+	free_info(info);
 	return (g_ecode);
 }
